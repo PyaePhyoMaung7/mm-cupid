@@ -1,0 +1,271 @@
+.change-photo{
+    top: 42%;
+}
+.hide{
+    display: none;
+}
+.button,
+.input,
+.select,
+.textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.article-container {
+  height: 100vh;
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-radius: 1px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 600px) {
+  .article-container {
+    width: 90%;
+  }
+}
+
+.article-container-header {
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.article-container-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  font-weight: 700;
+  font-size: 1.125;
+}
+
+.article-container-title svg {
+  width: 32px;
+  height: 32px;
+  color: #750550;
+}
+
+.article-container-body {
+  padding: 0px 52px 0px;
+  overflow-y: auto;
+}
+.article-container-body::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+.rtf h1,
+.rtf h2,
+.rtf h3,
+.rtf h4,
+.rtf h5,
+.rtf h6 {
+  font-weight: 700;
+}
+
+.rtf h1 {
+  font-size: 1.5rem;
+  line-height: 1.125;
+}
+
+.rtf h2 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.rtf h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.rtf > * + * {
+  margin-top: 1em;
+}
+
+.rtf > * + :is(h1, h2, h3) {
+  margin-top: 2em;
+}
+
+.rtf > :is(h1, h2, h3) + * {
+  margin-top: 0.75em;
+}
+
+.rtf ul,
+.rtf ol {
+  margin-left: 20px;
+  list-style-position: inside;
+}
+
+.rtf ol {
+  list-style: numeric;
+}
+
+.rtf ul {
+  list-style: disc;
+}
+
+.article-container-footer {
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid #ddd;
+  gap: 12px;
+  position: relative;
+}
+
+.article-container-footer:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -51px;
+  left: 24px;
+  right: 24px;
+  height: 50px;
+  flex-shrink: 0;
+  /* background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  ); */
+  pointer-events: none;
+}
+
+.button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 0;
+  font-size: 10px;
+  color: #717171;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.button.is-ghost:hover,
+.button.is-ghost:focus {
+  background-color: #dfdad7;
+}
+
+.button.is-primary {
+  background-color: #750550;
+  color: #fff;
+}
+
+.button.is-primary:hover,
+.button.is-primary:focus {
+  background-color: #4a0433;
+}
+
+.icon-button {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.15s ease;
+}
+
+.icon-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* .icon-button:hover,
+.icon-button:focus {
+  background-color: #dfdad7;
+} */
+.btn-smaller {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.75rem !important;
+
+}
+.icon-bigger{
+ font-size: 15px;
+}
+#carousel-cancel-btn:hover{
+  color: #e0e0e0;
+  transition: all .3s ease-out;
+}
+#carousel-cancel-btn{
+  color: #6c757d;
+  transition: all .3s ease-out;
+}
+.round-btn{
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#profile-content::-webkit-scrollbar {
+  width: 0px; /* Width of the scrollbar */
+}
+.tag-color{
+  background-color: #f5f5f5;
+}
+#upper-container{
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    transparent
+  );
+  border: none;
+}
+#lower-container{
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.3),
+    transparent
+  );
+  border: none;
+}
+.carousel-inner{
+  width: 100%;
+}
+.image{
+  cursor: pointer;
+}
+
+@media(min-width: 1080px) {
+  .carousel-inner, .carousel-indicators {
+    width: 35%;
+  }
+   /* #cancel-btn{
+    margin-left: 50px;
+  } */
+} 
+@media(max-width: 1080px) {
+  .carousel-inner, .carousel-indicators {
+    width: 50%;
+  }
+  #cancel-btn{
+    margin-left: -13px;
+  }
+}
+@media(max-width: 700px) {
+  .carousel-inner, .carousel-indicators {
+    width: 70%;
+  }
+  #cancel-btn{
+    margin-left: -25px;
+  }
+}
+@media(max-width: 500px) {
+  .carousel-inner, .carousel-indicators {
+    width: 100%;
+  }
+}

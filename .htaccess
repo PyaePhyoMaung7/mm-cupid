@@ -1,0 +1,20 @@
+# Options - Indexes
+
+#Deny access to directory listing and folder paths
+
+RewriteEngine On
+
+RewriteRule ^email-confirm$ email_confirm.php [L,QSA]
+RewriteRule ^index$ index.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^logout$ logout.php [L]
+RewriteRule ^register$ register.php [L]
+
+#Allow access to PHP fiels
+# <FilesMatch "\.php$">
+#     Order allow, deny
+#     Allow from allow
+# </FilesMatch>
+
+
+
