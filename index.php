@@ -11,7 +11,7 @@
     require('./templates/template_header.php')
 ?>
   <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
-  <div id="carousel-wrapper" style="z-index: 1;" class="opacity-0 bg-black vw-100 position-fixed top-0 p-0" >
+    <div id="carousel-wrapper" style="z-index: 1;" class="opacity-0 bg-black vw-100 position-fixed top-0 p-0" >
       <div role="button" id="cancel-btn" onclick="stopImageView()" style="z-index: 10; left: 3.5vw; width: 100px; height: 100px;" class="position-absolute text-secondary fw-bold fs-3 d-flex justify-content-center">
         <span id="carousel-cancel-btn">&#10005;</span>
       </div>
@@ -22,10 +22,10 @@
       <div id="carousalexample" class="carousel slide mx-auto" data-bs-interval="false">
           <div class="carousel-inner mx-auto">
           </div>
-          <a class="carousel-control-prev" onclick="displayCurrentPage('prev')" id="prev-btn" data-bs-target="#carousalexample" type="button" data-bs-slide="prev">
+          <a class="carousel-control-prev" ng-click="displayCurrentPage('prev')" id="prev-btn" data-bs-target="#carousalexample" type="button" data-bs-slide="prev">
               <span class="carousel-control-prev-icon"  aria-hidden="true"></span>
           </a>
-          <a class="carousel-control-next" onclick="displayCurrentPage('next')" id="next-btn" data-bs-target="#carousalexample" type="button" data-bs-slide="next">
+          <a class="carousel-control-next" ng-click="displayCurrentPage('next')" id="next-btn" data-bs-target="#carousalexample" type="button" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
           </a>
       </div>
@@ -38,7 +38,7 @@
             <div id="upper-container" class="position-absolute top-0 p-4" style="width: 100%;">
               <div class="d-flex text-white justify-content-between">
                 <div class="d-flex align-items-center">
-                  <span class="fw-bold fs-4 me-2">Thue Thue, 18</span> <i class="fa fa-circle text-success" style="font-size: 7px;"></i>
+                  <span class="fw-bold fs-4 me-2" ng-if="member.length > 0">{{member[0].username}}, {{member[0].age}}</span> <i class="fa fa-circle text-success" style="font-size: 7px;"></i>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   
@@ -68,57 +68,58 @@
 
             <div id="lower-container" class="position-absolute bottom-0 p-4" style="width: 100%; ">
               <div class="d-flex align-items-end justify-content-between">
-                <div class="round-btn btn btn-light" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-left"></i></div>
+                <button class="round-btn btn btn-light" ng-disabled="prev_btn_disabled" id="prev-profile-btn" ng-click="showMemberProfile(member_ids[member_ids.indexOf(member[0].id)-1])" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-left"></i></button>
                 <div class="d-flex">
                   <div class="round-btn me-3 btn btn-light" style="width: 60px; height: 60px;"><i class="fa fa-commenting fs-3"></i></div>
                   <div class="round-btn ms-3 btn btn-light" style="width: 60px; height: 60px;"><i class="fa fa-heart fs-3"></i></div>
                 </div>
-                <div class="round-btn btn btn-light me-2" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-right"></i></div>
+                <button class="round-btn btn btn-light me-2" ng-disabled="next_btn_disabled" id="next-profile-btn" ng-click="showMemberProfile(member_ids[member_ids.indexOf(member[0].id)+1])" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-right"></i></button>
               </div>
             </div>
 
             <div id="profile-content" class="overflow-y-auto bg-white" style="width:100%; height: 80vh; z-index: 5;">
               <div class="w-100 h-100">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIW_WVA2eMCdTfk2asrQBoV3-Yt2AoM60UKK5Zb30JCA&s" class="profile-image w-100 h-100 object-fit-cover" alt="">
+                <img ng-src="{{image_arr[0].image}}" ng-click="showCarousel(0, $event)" class="profile-image w-100 h-100 object-fit-cover" alt="">
               </div>
               <div class="">
                 <div class="p-4">
-                  <span class="text-secondary fw-bold">Why Thue's here</span>
+                  <span class="text-secondary fw-bold">Why {{first_name}}'s here</span>
                   <div class="tag-color p-3 mt-2 rounded-4 d-flex justify-content-start align-items-center">
                     <i class="fa fa-coffee me-2 fs-3"></i><span class="fs-4 fw-bold">Here to date</span>
                   </div>
                 </div>
                 <div class="p-4">
                   <div class="text-secondary fw-bold">About me</div>
-                  <div class="fs-5 fw-bold mt-2">Better in person</div>
+                  <div class="fs-5 fw-bold mt-2" ng-if="member.length > 0"> {{ member[0].about}}</div>
                 </div>
+                
                 <div class="p-4">
                   <div class="text-secondary fw-bold">Han's info</div>
                   <div class="mt-2 row g-2">
-                    <span class="col-auto tag-color rounded-pill p-2 mx-1"><i class="fa fa-male"></i> 164 cm</span>
-                    <span class="col-auto tag-color rounded-pill p-2 mx-1"><i class="fa fa-graduation-cap"></i> Graduate </span>
-                    <span class="col-auto tag-color rounded-pill p-2 mx-1"><i class="fa fa-book"></i> Buddhist </span>
-                    <span class="col-auto tag-color rounded-pill p-2 mx-1"><i class="fa fa-briefcase"></i> Nurse </span>
+                    <span class="col-auto tag-color rounded-pill p-2 mx-1" ng-if="member.length > 0"><i class="fa fa-male"></i>&nbsp;{{member[0].hfeet + "'" + member[0].hinches + '"'}}</span>
+                    <span class="col-auto tag-color rounded-pill p-2 mx-1" ng-if="member.length > 0"><i class="fa fa-graduation-cap"></i>&nbsp;{{member[0].education}} </span>
+                    <span class="col-auto tag-color rounded-pill p-2 mx-1" ng-if="member.length > 0"><i class="fa fa-book"></i>&nbsp;{{member[0].religion}}</span>
+                    <span class="col-auto tag-color rounded-pill p-2 mx-1" ng-if="member.length > 0"><i class="fa fa-briefcase">&nbsp;</i> {{member[0].work}} </span>
                   </div>
                 </div>
-                <div class="mb-2">
+                
+                <div class="mb-2" ng-repeat="image in image_arr" ng-if="image.sort != 1">
                   <div class="w-100 h-100" style="padding-left: vw;">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLjisGy4eY5ZkfsZAmtRQ-4MstK4DapAPegcL52fG10g&s" class="profile-image w-100 h-100 object-fit-cover" alt="">
-                  </div>
-                </div>
-                <div class="mb-2">
-                  <div class="w-100 h-100" style="padding-left: vw;">
-                    <img src="https://i.pinimg.com/736x/e7/e1/14/e7e114e5b52011520f05926fdd40a6d0.jpg" class="profile-image w-100 h-100 object-fit-cover" alt="">
+                    <img ng-src="{{image.image}}" ng-click="showCarousel($index, $event)" class="profile-image w-100 h-100 object-fit-cover" alt="">
                   </div>
                 </div>
 
                 <div class="p-4">
                   <div class="text-secondary fw-bold">Current location</div>
-                  <div class="fs-5 fw-bold mt-2">Yangon</div>
+                  <div class="fs-5 fw-bold mt-2" ng-if="member.length > 0">{{member[0].city}}</div>
                 </div>
                 <div class="p-4" style="margin-bottom: 70px;">
                   <div class="text-secondary fw-bold">Verification</div>
-                  <div class="mt-2"><i class="fa fa-certificate fs-5 me-2 text-primary"></i><span class="fs-5 fw-bold">Thue is photo verified</span></div>
+                  <div class="mt-2">
+                    <span class="fs-5 fw-bold" ng-if="member[0].status == 0"><i class="fa fa-certificate fs-5 me-2 text-danger"></i> {{first_name}} is unverified</span>
+                    <span class="fs-5 fw-bold" ng-if="member[0].status == 1"><i class="fa fa-certificate fs-5 me-2 text-primary"></i> {{first_name}} is email verified</span>
+                    <span class="fs-5 fw-bold" ng-if="member[0].status == 2"><i class="fa fa-certificate fs-5 me-2 text-success"></i> {{first_name}} is admin verified</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -144,8 +145,8 @@
                 </p>
               </div>
             </div>
-            <div class="text-center my-3">
-              <button class="btn btn-dark" id="load-more-btn" ng-click="loadMore()">... Load More ...</button>
+            <div class="text-center my-3" ng-if="show_more">
+              <button class="btn btn-dark" id="load-more-btn" ng-click="loadMore()">... Show More ...</button>
             </div>
           </div>
         </section>

@@ -9,11 +9,11 @@
     $result = $mysqli->query($sql);
 
     if($result){
-        $url = $base_url . 'login.php?msg=1';
+        $url = $base_url . 'login?msg=1';
         header('Refresh: 0 ; url = '.$url);
         exit();
     }else{
-        $url = $admin_base_url . 'login.php';
+        $url = $admin_base_url . 'login';
         header('Refresh: 0 ; url = '.$url);
         exit();
     }

@@ -174,7 +174,7 @@ HTML;
         <div class="col-md-5">
             <h1 class="fw-bold text-center" style="font-size: 60px">Sign up</h1>
             <div class="py-3 text-center" style="font-size: 14px;">
-                Already have an account? <a href="#" class="text-black">Log in</a>
+                Already have an account? <a href="<?php echo $base_url . 'login'; ?>" class="text-black">Log in</a>
             </div>
             <div class="fw-medium text-center" style="font-size: 14px;">Sign up with your email or phone number</div>
 
@@ -247,13 +247,14 @@ HTML;
 
                     <select name="religion" ng-model="religion" id="religion" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('religion')" ng-change="checkValidation('religion');">
                         <option value="" selected>Choose your religion</option>
-                        <option value="1">Buddhistm</option>
-                        <option value="2">Shinto</option>
-                        <option value="3">Christianity</option>
-                        <option value="4">Muslim</option>
-                        <option value="5">Hinduism</option>
-                        <option value="6">Atheism</option>
-                        <option value="7">Others</option>
+                        <option value="1">Christianity</option>
+                        <option value="2">Islam</option>
+                        <option value="3">Buddhistm</option>
+                        <option value="4">Hinduism</option>
+                        <option value="5">Jain</option>
+                        <option value="6">Shinto</option>
+                        <option value="7">Atheism</option>
+                        <option value="8">Others</option>
                         
                     </select>
                     <p class="text-danger" ng-if="religion_error">{{religion_error_msg}}</p>
@@ -337,7 +338,7 @@ HTML;
                             <td class="" colspan="2" rowspan="2">
                                 <div class="bg-body-secondary position-relative overflow-hidden rounded-2 mx-1 d-flex justify-content-center align-items-center" ng-click="browseFile()" style="height: 48vh; width: 23vw;  ">
                                     <div id="preview1" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('1')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo1" style="opacity: 0.8" >Change</label>
+                                    <label for="" onclick="browseImage('1')" class="btn btn-dark p-2 rounded-3 hide position-absolute change-photo change-photo1" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" style="cursor: pointer" id="upload-icon-1" onclick="browseImage('1')"></i>
                                 </div>
                             </td>
@@ -444,7 +445,7 @@ HTML;
             let fileName = fileInput.value.split('\\').pop();
             let fileExtension = fileName.split('.').pop();
 
-            let allow_extensions = ['jpg','jpeg','png','gif','webp'];
+            let allow_extensions = ['jpg','jpeg','png','gif','webp', 'avif'];
 
             let file = event.target.files[0];
 

@@ -138,7 +138,7 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <a href="<?php echo $admin_base_url . 'show_member.php' ; ?>"><button class="btn btn-dark">Back</button></a>
+                        <a href="#" onclick="history.back()"><button class="btn btn-dark">Back</button></a>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">

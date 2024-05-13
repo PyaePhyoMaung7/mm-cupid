@@ -10,31 +10,74 @@
         $request_data   = file_get_contents('php://input');
         $decoded_data   = json_decode($request_data,true);
         $pageNo         = $decoded_data['page'];
-        $limit          = 3;
-        $offset         = ($pageNo - 1) * $limit;
-        $afterLimit     = $offset + $limit;
+        $record_per_page= 9;
+        $offset         = ($pageNo - 1) * $record_per_page;
         $member_id      = $_SESSION['uid'];
-
-        $get_members = "SELECT id, username, thumbnail, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age FROM `members` WHERE id != '$member_id' AND deleted_at IS NULL LIMIT $offset, $limit";
-        $result = $mysqli->query($get_members);
+        $total_show_data= $pageNo * $record_per_page;
+        $get_members_sql = "SELECT T01.*, TIMESTAMPDIFF(YEAR, T01.date_of_birth, CURDATE()) AS age, 
+                            CASE
+                                WHEN religion = 1 THEN 'Christian'
+                                WHEN religion = 2 THEN 'Muslim'
+                                WHEN religion = 3 THEN 'Buddhist'
+                                WHEN religion = 4 THEN 'Hindu'
+                                WHEN religion = 5 THEN 'Jain'
+                                WHEN religion = 6 THEN 'Shinto'
+                                WHEN religion = 7 THEN 'Atheist'
+                                ELSE 'Other'
+                            END AS religion_name,
+                            T02.name AS city_name
+                            FROM `members` AS T01
+                            LEFT JOIN `city` AS T02
+                            ON T01.city_id = T02.id
+                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND T01.deleted_at IS NULL 
+                            LIMIT $offset, $record_per_page";
+        // echo $get_members_sql;
+        // exit();
+        $result = $mysqli->query($get_members_sql);
         $data = [];
         $response_data = [];
         while($row = $result->fetch_assoc()){
-            $data['id'] = (int) $row['id'];
-            $data['username'] = htmlspecialchars( $row['username']);
+            $id = (int) $row['id'];
+            $data['id'] = $id;
+            $data['username'] = htmlspecialchars($row['username']);
             $data['age'] = (int) $row['age'];
+            $data['city'] = htmlspecialchars($row['city_name']);
+            $data['religion'] = htmlspecialchars($row['religion_name']);
+            $data['about'] = htmlspecialchars($row['about']);
+            $data['status'] = htmlspecialchars($row['status']);
+            $data['hfeet'] = htmlspecialchars($row['height_feet']);
+            $data['hinches'] = htmlspecialchars($row['height_inches']);
+            $data['education'] = htmlspecialchars($row['education']);
+            $data['work'] = htmlspecialchars($row['work']);
             $data['thumb'] = $base_url . 'assets/uploads/' .  $data['id'] . '/thumb/' . $row['thumbnail'];
+            
+            $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$id' AND deleted_at IS NULL ORDER BY sort ASC";
+            $gallery_res = $mysqli->query($gallery_sql);
+            $images = [];
+            $photo  = [];
+            while($row2 = $gallery_res->fetch_assoc()){
+                $image  = htmlspecialchars($row2['name']);
+                $sort   = htmlspecialchars($row2['sort']);
+                $photo_path = $base_url . 'assets/uploads/' .  $id . '/' . $image;
+                $photo['image'] = $photo_path;
+                $photo['sort']  = $sort;
+                array_push($images, $photo);
+            }
+            $data['images'] = $images;
             array_push($response_data, $data);
         }
 
-        $more_members = "SELECT id FROM `members` WHERE id != '$member_id' LIMIT $afterLimit, 1";
-        $more_memebrs_res = $mysqli->query($more_members);
-        if($more_memebrs_res->num_rows > 0){
-            $response['more_member_exist'] = true;
+        $more_members_sql = "SELECT count(id) AS total FROM `members` WHERE id != '$member_id' AND status != 0 AND status != 3 AND deleted_at IS NULL";
+        $more_memebrs_res = $mysqli->query($more_members_sql);
+        $row2 = $more_memebrs_res->fetch_assoc();
+        $total_count = $row2['total'];
+
+        if($total_count <= $total_show_data){
+            $response['show_more'] = false;
         }else{
-            
-            $response['more_member_exist'] = false;
+            $response['show_more'] = true;
         }
+
         $response['status'] = '200';
         $response['data'] = $response_data;
         

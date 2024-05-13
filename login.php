@@ -7,7 +7,6 @@
     $keywords_content = "mmcupid | MMcupid | find love | find lover | dating | date partner | ဖူးစာရှာ | အချစ်ရှာ | ကောင်လေးရှာ | ကောင်မလေးရှာ";
     
     $title = "Log in | MMcupid";
-
     $email = '';
     $password = '';
     $error = false;
@@ -66,7 +65,7 @@
         <div class="col-md-5">
             <h1 class="fw-bold text-center" style="font-size: 60px">Sign in</h1>
             <div class="py-3 text-center" style="font-size: 14px;">
-                Don't have account yet? <a href="#" class="text-black">Sign up</a>
+                Don't have account yet? <a href="<?php echo $base_url . 'register' ?>" class="text-black">Sign up</a>
             </div>
 
             <form id="login-form" action="<?php echo $base_url; ?>login.php" method="POST">
@@ -116,6 +115,22 @@
     }
 ?>
 
+<?php 
+    if(isset($_GET['msg']) && $_GET['msg'] == 1){
+?>
+<script>
+    new PNotify({
+        title: 'Welcome to ' + '<?php echo $site_title; ?>' + ' !',
+        text: 'Your account has been activated successfully.</br>Please Login',
+        width: '350px',
+        type: 'success',
+        styling: 'bootstrap3'
+    });
+</script>
+
+<?php
+    }
+?>
 <?php 
     require('./templates/template_html_end.php');
 ?>

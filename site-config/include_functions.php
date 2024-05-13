@@ -7,7 +7,7 @@
     function checkImageExtension($file_name){
         $explode = explode('.',$file_name);
         $extension = strtolower(end($explode));
-        $allow_extensions = ['jpg','jpeg','png','gif', 'webp'];
+        $allow_extensions = ['jpg','jpeg','png','gif', 'webp', 'avif'];
         if(in_array($extension, $allow_extensions)){
             return true;
         }else{
