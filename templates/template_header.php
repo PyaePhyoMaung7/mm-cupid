@@ -34,7 +34,9 @@
       }
     </style>
     <script>
-      let base_url = 'http://localhost/mm-cupid/';
+      const base_url = 'http://localhost/mm-cupid/';
+      const gender_type = { 0 : 'Man' , 1 : 'Woman' , 2 : 'Everyone'};
+      const partner_gender = "<?php echo $_SESSION['partner_gender'] ; ?>";
     </script>
   </head>
   <body style="background-color: #e9d8ff">

@@ -15,7 +15,7 @@
         $email = $mysqli->real_escape_string($_POST['email']);
         $password = $_POST['password'];
 
-        $sql = "SELECT id, username, email, password, status  FROM `members` WHERE email = '$email' AND deleted_at IS NULL";
+        $sql = "SELECT id, username, email, password, status, point, partner_gender  FROM `members` WHERE email = '$email' AND deleted_at IS NULL";
         $result = $mysqli->query($sql);
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -23,6 +23,8 @@
             $db_username    = htmlspecialchars($row['username']);
             $db_status      = (int)$row['status'];
             $db_password    = $row['password'];
+            $db_point          = (int)$row['point'];
+            $db_partner_gender = (int)$row['partner_gender'];
             $hashed_password = generatePassword($password, $sha_key);
             if($hashed_password == $db_password){
                 $status = htmlspecialchars($row['status']);
@@ -37,10 +39,12 @@
                     $_SESSION['uusername'] = $db_username;
                     $_SESSION['uemail'] = $email;
                     $_SESSION['status'] = $db_status;
+                    $_SESSION['point'] = $db_point;
+                    $_SESSION['partner_gender'] = $db_partner_gender;
                     $today_dt = date('Y-m-d H:i:s');
                     $update_last_login = "UPDATE `members` SET last_login = '$today_dt' WHERE id = '$db_id'";
                     $mysqli->query($update_last_login);
-                    $url = $base_url . 'index.php';
+                    $url = $base_url . 'index';
                     header('Refresh: 0 ; url = '.$url);
                     exit();
                 }
@@ -73,7 +77,7 @@
                 <p class="text-danger" ng-if="email_error">{{email_error_msg}}</p>
                 
                 <div class="position-relative">
-                    <input type="password" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Password" name="password" id="password" ng-model="password" ng-blur="validate('password')"  ng-change="checkValidation();validate('password');" value="<?php echo $password; ?>" />
+                    <input type="password" ng-keypress="tryLogin($event)" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Password" name="password" id="password" ng-model="password" ng-blur="validate('password')"  ng-change="checkValidation();validate('password');" value="<?php echo $password; ?>" />
                     <i class="fa fa-eye-slash position-absolute top-0 end-0 mt-3 me-3 fs-5" id="password-icon" ng-mousedown="openPassword('password')" ng-mouseup="closePassword('password')"></i>
                     <p class="text-danger" ng-if="password_error">{{password_error_msg}}</p>
                 </div>

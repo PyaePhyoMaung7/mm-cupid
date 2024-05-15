@@ -84,4 +84,10 @@ app.controller('myCtrl', function($scope, $http){
         $('#login-form').submit();
     }
 
+    $scope.tryLogin = function (event) {
+        if(event.which == 13){
+            $scope.login();
+        }
+    }
+
 });

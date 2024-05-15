@@ -171,7 +171,7 @@ HTML;
       <div class="row">
         <div class="col"></div>
 
-        <div class="col-md-5">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-5">
             <h1 class="fw-bold text-center" style="font-size: 60px">Sign up</h1>
             <div class="py-3 text-center" style="font-size: 14px;">
                 Already have an account? <a href="<?php echo $base_url . 'login'; ?>" class="text-black">Log in</a>
@@ -273,7 +273,7 @@ HTML;
 
                     <p class="form-check-label mt-2" for="male">Please choose your hobbies.</p>
                     <div class="row ms-0">
-                        <div class="col-md-4 form-check" ng-repeat="hobby in hobbies">
+                        <div class="col-6 col-md-4 form-check" ng-repeat="hobby in hobbies">
                             <input class="form-check-input hobby" name="hobbies[]" id="hobby-{{hobby.id}}" type="checkbox" value="{{hobby.id}}" ng-model="selected_hobbies"  ng-blur="validate('selected-hobbies')" ng-change="checkValidation('selected-hobbies');">
                             <label class="form-check-label" for="hobby-{{hobby.id}}">{{hobby.name}}</label>
                         </div>
@@ -333,17 +333,17 @@ HTML;
                     <?php
                         }
                     ?>
-                    <table class="mt-2" style="width: 100%; margin-left: -5px;">
+                    <table class="mt-2" style="width: 100%; border-collapse: separate; border-spacing: .5em;">
                         <tr>
                             <td class="" colspan="2" rowspan="2">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 mx-1 d-flex justify-content-center align-items-center" ng-click="browseFile()" style="height: 48vh; width: 23vw;  ">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" ng-click="browseFile()" style="height: 48vh; width: 23vw;  ">
                                     <div id="preview1" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('1')" class="btn btn-dark p-2 rounded-3 hide position-absolute change-photo change-photo1" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" style="cursor: pointer" id="upload-icon-1" onclick="browseImage('1')"></i>
                                 </div>
                             </td>
                             <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 m-1 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
                                     <div id="preview2" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('2')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo2" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" onclick="browseImage('2')" style="cursor: pointer" id="upload-icon-2"></i>
@@ -352,7 +352,7 @@ HTML;
                         </tr>
                         <tr>
                             <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 m-1 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
                                     <div id="preview3" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('3')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo3" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" onclick="browseImage('3')" style="cursor: pointer" id="upload-icon-3"></i>
@@ -361,21 +361,21 @@ HTML;
                         </tr>
                         <tr>
                             <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 m-1 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
                                     <div id="preview4" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('4')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo4" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" onclick="browseImage('4')" style="cursor: pointer" id="upload-icon-4"></i>
                                 </div>
                             </td>
                             <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 m-1 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
                                     <div id="preview5" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('5')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo5" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" onclick="browseImage('5')" style="cursor: pointer" id="upload-icon-5"></i>
                                 </div>
                             </td>
-                            <td class="rounded-2">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 m-1 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
+                            <td class="">
+                                <div class="w-100 bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh; width: 11vw; ">
                                     <div id="preview6" class="d-none w-100 h-100"></div>
                                     <label for="" onclick="browseImage('6')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo6" style="opacity: 0.8" >Change</label>
                                     <i class="fa fa-upload fs-4" onclick="browseImage('6')" style="cursor: pointer" id="upload-icon-6"></i>
@@ -389,7 +389,7 @@ HTML;
                     <input type="file" name="upload4" id="upload4" onchange="previewImage('4')" class="d-none">
                     <input type="file" name="upload5" id="upload5" onchange="previewImage('5')" class="d-none">
                     <input type="file" name="upload6" id="upload6" onchange="previewImage('6')" class="d-none">
-                    <button type="button" ng-click="register()" disabled id="register-btn" class="btn btn-dark rounded rounded-5 btn-lg mt-4" style="width:105%;">
+                    <button type="button" ng-click="register()" disabled id="register-btn" class="btn btn-dark rounded rounded-5 btn-lg mt-4" style="width:100%;">
                         Register
                     </button>
 
