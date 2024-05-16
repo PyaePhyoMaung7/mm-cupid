@@ -1,8 +1,10 @@
 <footer class="article-container-footer">
-    <button class="button is-ghost text-secondary d-flex align-items-center">
-    <i class="fa fa-home fs-3 me-1"></i>
-    <span>Home</span>
-    </button>
+    <a href="<?php echo $base_url ;?>index" class="text-decoration-none">
+        <button class="button is-ghost text-secondary d-flex align-items-center">
+            <i class="fa fa-home fs-3 me-1"></i>
+            <span>Home</span>
+        </button>
+    </a>
     <button class="button is-ghost">
     <svg
         data-origin="pipeline"
@@ -30,7 +32,7 @@
     <i class="fa fa-commenting fs-4 me-1"></i>
     <span>Chats</span>
     </button>
-    <a href="./profile.html" class="text-decoration-none">
+    <a href="<?php echo $base_url ;?>profile" class="text-decoration-none">
         <button class="button is-ghost text-secondary d-flex align-items-center">
             <i class="fa fa-user fs-4 me-1"></i>
             <span>Profile</span>

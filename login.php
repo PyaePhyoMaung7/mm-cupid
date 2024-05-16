@@ -15,16 +15,32 @@
         $email = $mysqli->real_escape_string($_POST['email']);
         $password = $_POST['password'];
 
-        $sql = "SELECT id, username, email, password, status, point, partner_gender  FROM `members` WHERE email = '$email' AND deleted_at IS NULL";
+        $sql = "SELECT *, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age FROM `members` WHERE email = '$email' AND deleted_at IS NULL";
+
         $result = $mysqli->query($sql);
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $db_id          = (int)$row['id'];
-            $db_username    = htmlspecialchars($row['username']);
-            $db_status      = (int)$row['status'];
-            $db_password    = $row['password'];
-            $db_point          = (int)$row['point'];
-            $db_partner_gender = (int)$row['partner_gender'];
+            $db_id              = (int)$row['id'];
+            $db_username        = htmlspecialchars($row['username']);
+            $db_password        = $row['password'];
+            $db_status          = (int)$row['status'];
+            $db_email           = htmlspecialchars($row['email']);
+            $db_phone           = htmlspecialchars($row['phone']);
+            $db_age             = (int)$row['age'];
+            $db_city            = (int)$row['city_id'];
+            $db_gender          = (int)$row['gender'];
+            $db_date_of_birth   = htmlspecialchars($row['date_of_birth']);
+            $db_education       = htmlspecialchars($row['education']);
+            $db_hfeet           = (int)$row['height_feet'];
+            $db_hinches         = (int)$row['height_inches'];
+            $db_point           = (int)$row['point'];
+            $db_work            = htmlspecialchars($row['work']);
+            $db_religion        = htmlspecialchars($row['religion']);
+            $db_about           = htmlspecialchars($row['about']);
+            $db_partner_gender  = (int)$row['partner_gender'];
+            $db_partner_min_age = (int)$row['partner_min_age'];
+            $db_partner_max_age = (int)$row['partner_max_age'];
+
             $hashed_password = generatePassword($password, $sha_key);
             if($hashed_password == $db_password){
                 $status = htmlspecialchars($row['status']);
@@ -35,15 +51,44 @@
                     $error = true;
                     $error_message = "Your account has been banned.";
                 }else{
-                    $_SESSION['uid'] = $db_id;
-                    $_SESSION['uusername'] = $db_username;
-                    $_SESSION['uemail'] = $email;
-                    $_SESSION['status'] = $db_status;
-                    $_SESSION['point'] = $db_point;
+                    $_SESSION['uid']            = $db_id;
+                    $_SESSION['uusername']      = $db_username;
+                    $_SESSION['status']         = $db_status;
+                    $_SESSION['uemail']         = $db_email;
+                    $_SESSION['uphone']         = $db_phone;
+                    $_SESSION['uage']           = $db_age;
+                    $_SESSION['ucity']          = $db_city;
+                    $_SESSION['ugender']        = $db_gender;
+                    $_SESSION['udate_of_birth'] = $db_date_of_birth;
+                    $_SESSION['ueducation']     = $db_education;
+                    $_SESSION['uheight_feet']   = $db_hfeet;
+                    $_SESSION['uheight_inches'] = $db_hinches;
+                    $_SESSION['upoint']         = $db_point;
+                    $_SESSION['uwork']          = $db_work;
+                    $_SESSION['ureligion']      = $db_religion;
+                    $_SESSION['uabout']         = $db_about;
                     $_SESSION['partner_gender'] = $db_partner_gender;
-                    $today_dt = date('Y-m-d H:i:s');
+                    $_SESSION['partner_min_age']= $db_partner_min_age;
+                    $_SESSION['partner_max_age']= $db_partner_max_age;
+
+                    $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$db_id'";
+                    $gallery_res = $mysqli->query($gallery_sql);
+                    $images = [];
+                    $photo  = [];
+                    while($row = $gallery_res->fetch_assoc()){
+                        $image  = htmlspecialchars($row['name']);
+                        $sort   = htmlspecialchars($row['sort']);
+                        $photo_path = $base_url . 'assets/uploads/' .  $db_id . '/' . $image;
+                        $photo['image'] = $photo_path;
+                        $photo['sort']  = $sort;
+                        array_push($images, $photo);
+                    }
+                    $_SESSION['images'] = $images;
+
+                    $today_dt  = date('Y-m-d H:i:s');
                     $update_last_login = "UPDATE `members` SET last_login = '$today_dt' WHERE id = '$db_id'";
                     $mysqli->query($update_last_login);
+
                     $url = $base_url . 'index';
                     header('Refresh: 0 ; url = '.$url);
                     exit();

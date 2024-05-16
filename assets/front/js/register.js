@@ -21,8 +21,8 @@ app.controller('myCtrl', function($scope, $http){
     $scope.work             = "";
     $scope.data             = {};
     $scope.process_error    = false;
-    $scope.user_info        = true;
-    $scope.user_photo       = false;
+    $scope.user_info        = false;
+    $scope.user_photo       = true;
     $scope.emailRegex       = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     $scope.passwordRegex    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]*$/;
     $scope.dateRegex        = /^\d{4}-\d{2}-\d{2}$/;

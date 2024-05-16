@@ -8,6 +8,7 @@ RewriteRule ^email-confirm$ email_confirm.php [L,QSA]
 RewriteRule ^index$ index.php [L]
 RewriteRule ^login$ login.php [L]
 RewriteRule ^logout$ logout.php [L]
+RewriteRule ^profile$ profile.php [L]
 RewriteRule ^register$ register.php [L]
 
 #Allow access to PHP fiels

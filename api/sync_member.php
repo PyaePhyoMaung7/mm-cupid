@@ -17,21 +17,33 @@
         $where_gender   = '';
         $where_min_age   = '';
         $where_max_age   = '';
-        $partner_gender =  $mysqli->real_escape_string($decoded_data['partner_gender']);
-        $partner_min_age=  $mysqli->real_escape_string($decoded_data['min_age']);
-        $partner_max_age=  $mysqli->real_escape_string($decoded_data['max_age']);
+        $filter_conditions = '';
 
-        if($partner_gender == 0 || $partner_gender == 1) {
-            $where_gender = "T01.gender = '$partner_gender' AND";
+        if(array_key_exists('partner_gender', $decoded_data)) {
+            $partner_gender =  $decoded_data['partner_gender'];
+
+            if($partner_gender != 2) {
+                $where_gender = "T01.gender = '$partner_gender' AND";
+            }
+        }else{
+            $partner_gender= $_SESSION['partner_gender'];
+
+            if($partner_gender != 2) {
+                $where_gender = "T01.gender = '$partner_gender' AND";
+            }
         }
 
-        if($partner_min_age != '') {
-            $where_min_age = " TIMESTAMPDIFF(YEAR, T01.date_of_birth, CURDATE()) >= '$partner_min_age' AND";
+        if(array_key_exists('min_age', $decoded_data) && $decoded_data['min_age'] != ''){
+            $partner_min_age=  $decoded_data['min_age'];
+            $where_min_age = " T01.date_of_birth <= CURDATE() - INTERVAL '$partner_min_age' YEAR AND";
         }
 
-        if($partner_max_age != '') {
-            $where_max_age = " TIMESTAMPDIFF(YEAR, T01.date_of_birth, CURDATE()) <= '$partner_max_age' AND";
+        if(array_key_exists('max_age', $decoded_data) && $decoded_data['max_age'] != ''){
+            $partner_max_age=  $decoded_data['max_age'];
+            $where_max_age = " T01.date_of_birth >= CURDATE() - INTERVAL '$partner_max_age' YEAR AND";
         }
+
+        $filter_conditions = $where_gender . $where_min_age . $where_max_age;
 
         $get_members_sql = "SELECT T01.*, TIMESTAMPDIFF(YEAR, T01.date_of_birth, CURDATE()) AS age, 
                             CASE 
@@ -52,7 +64,7 @@
                             FROM `members` AS T01
                             LEFT JOIN `city` AS T02
                             ON T01.city_id = T02.id
-                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $where_gender . $where_min_age . $where_max_age . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
+                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $filter_conditions . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
         
         $result = $mysqli->query($get_members_sql);
 
@@ -95,7 +107,7 @@
             array_push($response_data, $data);
         }
 
-        $more_members_sql = "SELECT count(T01.id) AS total FROM `members` T01 WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $where_gender . $where_min_age . $where_max_age . " T01.deleted_at IS NULL";
+        $more_members_sql = "SELECT count(T01.id) AS total FROM `members` T01 WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $filter_conditions . " T01.deleted_at IS NULL";
         $more_memebrs_res = $mysqli->query($more_members_sql);
         $row2 = $more_memebrs_res->fetch_assoc();
         $total_count = $row2['total'];

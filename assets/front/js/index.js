@@ -11,25 +11,29 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.image_arr = [];
     $scope.all_images = [];
     $scope.show_more = true;
+    $scope.is_filtered = false;
     $scope.next_btn_disabled = false;
     $scope.prev_btn_disabled = false;
     $scope.partner_gender = partner_gender;
     $scope.partner_gender_name = gender_type[$scope.partner_gender];
-    $scope.min_age  = '';
-    $scope.max_age = '';
-    $scope.age_limit = '18-55';
+    $scope.min_age  = partner_min_age;
+    $scope.max_age = partner_max_age;
+    $scope.age_limit = '';
     $scope.min_ages = [];
     $scope.max_ages = [];
 
-    for (let i = 18; i <= 55; i++) {
+    for (let i = 18; i <= $scope.max_age; i++) {
         $scope.min_ages.push(i);
     }
 
-    $scope.max_ages = [...$scope.min_ages];
+    for (let i = $scope.min_age; i <= 55; i++) {
+        $scope.max_ages.push(i);
+    }
 
     $scope.init = function () {
         $scope.syncMember();
         $scope.checkedGender();
+        $scope.changeAgeLimit();
     }
 
     $scope.loadMore = function () {
@@ -39,15 +43,11 @@ app.controller('myCtrl', function($scope, $http, $window){
 
     $scope.syncMember = function () {
         $scope.loading = true;
+        const data = $scope.is_filtered ? {'page' : $scope.page, 'partner_gender' : $scope.partner_gender, 'min_age' : $scope.min_age, 'max_age' : $scope.max_age } : {'page' : $scope.page} ;
         $http({
             method: 'POST',
             url: base_url+'api/sync_member.php',
-            data: { 
-                'page' : $scope.page,
-                'partner_gender' : $scope.partner_gender,
-                'min_age' : $scope.min_age,
-                'max_age' : $scope.max_age
-            },
+            data: data,
             headers: {
               'Content-Type': 'application/json'
             }
@@ -229,10 +229,14 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.filterAge = function () {
         $scope.min_age = $('#min-age').val();
         $scope.max_age = $('#max-age').val();
-        $scope.age_limit = $scope.min_age == '' ? '18' : $scope.min_age;
-        $scope.age_limit += '-';
-        $scope.age_limit += $scope.max_age == '' ? '55' : $scope.max_age;
+        $scope.changeAgeLimit();
         $scope.backSearchOffcanvas();
+    }
+
+    $scope.changeAgeLimit = function () {
+        $scope.age_limit = $scope.min_age == '' ? 'any' : $scope.min_age;
+        $scope.age_limit += '-';
+        $scope.age_limit += $scope.max_age == '' ? 'any' : $scope.max_age;
     }
 
     $scope.backSearchOffcanvas = function () {
@@ -254,29 +258,11 @@ app.controller('myCtrl', function($scope, $http, $window){
 
     $scope.applyFilter = function () {
         $scope.page = 1;
+        $scope.is_filtered = true;
+        $scope.members = [];
         $scope.loading = true;
-        $http({
-            method: 'POST',
-            url: base_url+'api/sync_member.php',
-            data: { 
-                'page' : $scope.page,
-                'partner_gender' : $scope.partner_gender,
-                'min_age' : $scope.min_age,
-                'max_age' : $scope.max_age
-            },
-            headers: {
-              'Content-Type': 'application/json'
-            }
-        }).then(
-            function (response) {
-                $scope.loading = false;
-                if(response.data.status == "200") {
-                    $scope.members = response.data.data;
-                    $scope.show_more = response.data.show_more;
-                    $scope.backSearchOffcanvas();
-                }
-            }
-        )
+        $scope.syncMember();
+        $scope.backSearchOffcanvas();
     }
 
     $scope.chooseMinAge = function () {

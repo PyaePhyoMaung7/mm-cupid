@@ -5,7 +5,7 @@
   <div class="d-flex justify-content-center align-items-center">
     <button class="icon-button bg-black justify-content-center me-1 d-flex align-items-center" style="height: 25px; width: 60px; border-radius: 100%/60px;">
       <i class="fa fa-usd me-1 text-dark rounded-circle bg-white" style="font-size: 12px;padding: 2px 5px;"></i>
-      <span class=" text-white" style="font-size: 12px;"><?php echo $_SESSION['point']; ?></span>
+      <span class=" text-white" style="font-size: 12px;"><?php echo $_SESSION['upoint']; ?></span>
     </button>
     <button class="icon-button" >
       <i class="fa fa-search fs-4 fw-bold" id="offcanvas-search-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch"></i>
@@ -67,16 +67,16 @@
             <div style="width:48%;">
               <label for="min-age"><strong>Minimum</strong></label>
                 <select name="min-age" id="min-age" class="form-select form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2" ng-model="min_age" ng-change="chooseMinAge()">
-                    <option value="" selected>Minimum Age</option>
-                    <option value='{{age}}' ng-repeat="age in min_ages">{{age}}</option>
+                    <option value="">Any Age</option>
+                    <option value='{{age}}' ng-repeat="age in min_ages" ng-selected="age == min_age">{{age}}</option>
                 </select>
             </div>
             
             <div style="width:48%;">
                 <label for="max-age"><strong>Maximum</strong></label>
                 <select name="max-age" id="max-age" class="form-select form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2" ng-model="max_age" ng-change="chooseMaxAge()">
-                    <option value="" selected>Maximum Age</option>
-                    <option value='{{age}}' ng-repeat="age in max_ages">{{age}}</option>
+                    <option value="">Any Age</option>
+                    <option value='{{age}}' ng-repeat="age in max_ages" ng-selected="age == max_age">{{age}}</option>
                 </select>
             </div>
         </div>

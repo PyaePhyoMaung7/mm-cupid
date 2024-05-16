@@ -10,6 +10,11 @@
     
     require('./templates/template_header.php')
 ?>
+    <script>
+      const partner_gender = "<?php echo $_SESSION['partner_gender'] ; ?>";
+      const partner_min_age= "<?php echo $_SESSION['partner_min_age'] ; ?>";
+      const partner_max_age= "<?php echo $_SESSION['partner_max_age'] ; ?>";
+    </script>
   <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
     <div class="loading" ng-if="loading">Loading&#8230;</div>
     <div class="content">
@@ -107,7 +112,7 @@
                   
                   <div class="mb-2" ng-repeat="(index, image) in image_arr" ng-if="image.sort != 1">
                     <div class="w-100 h-100" style="padding-left: vw;">
-                      <img ng-src="{{image.image}}" ng-click="showCarousel(index, image.image, $event)" class="profile-image w-100 h-100 object-fit-cover" alt="">
+                      <img ng-src="{{image.image}}" ng-click="showCarousel(index, image.image, $event)" class="profile-image w-100 h-100 mb-1 object-fit-cover" alt="">
                     </div>
                   </div>
 
@@ -137,7 +142,7 @@
           <section class="article-container-body rtf">
             <div class="container" id="image-content" style="z-index: 10; min-height: 500px;">
               <div class="row my-2">
-                <div class="col-12 col-sm-6 col-md-4" style="height: 36vh;" id="profile-{{index}}" ng-repeat="(index, member) in members">
+                <div class="col-6 col-sm-4 mb-2 member-profiles" style="height: 36vh;" id="profile-{{index}}" ng-repeat="(index, member) in members">
                   <div class="" style="height: 85%;">
                     <img ng-src="{{member.thumb}}" ng-click="showMemberProfile(index)" width="100%" height="100%" alt="" class="image rounded rounded-4 object-fit-cover"
                       data-toggle="modal" data-target="#exampleModal">
