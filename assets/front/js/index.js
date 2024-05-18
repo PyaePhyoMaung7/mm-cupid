@@ -22,7 +22,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.min_ages = [];
     $scope.max_ages = [];
 
-    for (let i = 18; i <= $scope.max_age; i++) {
+    for (let i = 18; i <= 55; i++) {
         $scope.min_ages.push(i);
     }
 
@@ -46,7 +46,7 @@ app.controller('myCtrl', function($scope, $http, $window){
         const data = $scope.is_filtered ? {'page' : $scope.page, 'partner_gender' : $scope.partner_gender, 'min_age' : $scope.min_age, 'max_age' : $scope.max_age } : {'page' : $scope.page} ;
         $http({
             method: 'POST',
-            url: base_url+'api/sync_member.php',
+            url: base_url+'api/sync_members.php',
             data: data,
             headers: {
               'Content-Type': 'application/json'
@@ -266,7 +266,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.chooseMinAge = function () {
-        $scope.min_age = $('#min-age').val();
+        $scope.min_age = parseInt($('#min-age').val(), 10);
         $scope.max_ages = [];
         if($scope.min_age == ''){
             for (let i = 18; i <= 55; i++) {
@@ -277,10 +277,12 @@ app.controller('myCtrl', function($scope, $http, $window){
                 $scope.max_ages.push(i);
             }
         }
+        console.log(typeof $scope.min_age);
+        console.log($scope.max_ages);
     }
 
     $scope.chooseMaxAge = function () {
-        $scope.max_age = $('#max-age').val();
+        $scope.max_age = parseInt($('#max-age').val(), 10);
         $scope.min_ages = [];
         if($scope.max_age == ""){
             for (let i = 18; i <= 55; i++) {

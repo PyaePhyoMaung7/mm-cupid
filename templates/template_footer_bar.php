@@ -1,6 +1,10 @@
+<?php 
+    $current_page = basename($_SERVER['REQUEST_URI'], ".php"); 
+?>
+
 <footer class="article-container-footer">
     <a href="<?php echo $base_url ;?>index" class="text-decoration-none">
-        <button class="button is-ghost text-secondary d-flex align-items-center">
+        <button class="button is-ghost text-secondary d-flex flex-column align-items-center" <?php echo $current_page == 'index' ? 'style = "background-color: #dfdad7; color: black !important""' : ''; ?>>
             <i class="fa fa-home fs-3 me-1"></i>
             <span>Home</span>
         </button>
@@ -33,7 +37,7 @@
     <span>Chats</span>
     </button>
     <a href="<?php echo $base_url ;?>profile" class="text-decoration-none">
-        <button class="button is-ghost text-secondary d-flex align-items-center">
+        <button class="button is-ghost text-secondary d-flex align-items-center " <?php echo $current_page == 'profile' ? 'style = "background-color: #dfdad7; color: black !important"' : ''; ?>>
             <i class="fa fa-user fs-4 me-1"></i>
             <span>Profile</span>
         </button>
