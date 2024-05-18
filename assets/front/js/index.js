@@ -22,7 +22,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.min_ages = [];
     $scope.max_ages = [];
 
-    for (let i = 18; i <= 55; i++) {
+    for (let i = 18; i <= $scope.max_age; i++) {
         $scope.min_ages.push(i);
     }
 
@@ -266,7 +266,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.chooseMinAge = function () {
-        $scope.min_age = parseInt($('#min-age').val(), 10);
+        console.log($scope.min_age);
         $scope.max_ages = [];
         if($scope.min_age == ''){
             for (let i = 18; i <= 55; i++) {
@@ -277,12 +277,9 @@ app.controller('myCtrl', function($scope, $http, $window){
                 $scope.max_ages.push(i);
             }
         }
-        console.log(typeof $scope.min_age);
-        console.log($scope.max_ages);
     }
 
     $scope.chooseMaxAge = function () {
-        $scope.max_age = parseInt($('#max-age').val(), 10);
         $scope.min_ages = [];
         if($scope.max_age == ""){
             for (let i = 18; i <= 55; i++) {

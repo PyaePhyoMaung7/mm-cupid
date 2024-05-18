@@ -1,14 +1,14 @@
-<?php 
-    session_start();
-    require('./site-config/config.php');
-    require('./site-config/connect.php');
-    require('./site-config/check_member_auth.php');
-    require('./site-config/include_functions.php');
-    $title = "Nearby | " . $site_title;
-    $description_content = "Myanmar Dating | Online Dating | Myanmar Cupid | MMcupid | သင့်ဖူးစာရှင်ကိုရှာဖွေလိုက်ပါ | Welcome Myanmar Cupid";
-    $keywords_content = "myanrmar online dating, online dating, mmcupid, myanmar dating website, find love, find lover, dating, date partner, ဖူးစာရှာ, အချစ်ရှာ, ကောင်လေးရှာ, ကောင်မလေးရှာ";
-    
-    require('./templates/template_header.php')
+<?php
+session_start();
+require('./site-config/config.php');
+require('./site-config/connect.php');
+require('./site-config/check_member_auth.php');
+require('./site-config/include_functions.php');
+$title = "Home | " . $site_title;
+$description_content = "Myanmar Dating | Online Dating | Myanmar Cupid | MMcupid | သင့်ဖူးစာရှင်ကိုရှာဖွေလိုက်ပါ | Welcome Myanmar Cupid";
+$keywords_content = "myanrmar online dating, online dating, mmcupid, myanmar dating website, find love, find lover, dating, date partner, ဖူးစာရှာ, အချစ်ရှာ, ကောင်လေးရှာ, ကောင်မလေးရှာ";
+
+require ('./templates/template_header.php')
 ?>
     <script>
       const partner_gender = "<?php echo $_SESSION['partner_gender'] ; ?>";
@@ -123,14 +123,31 @@
                   <div class="p-4" style="margin-bottom: 70px;">
                     <div class="text-secondary fw-bold">Verification</div>
                     <div class="mt-2">
-                      <span class="fs-5 fw-bold" ng-if="member.status == 0"><i class="fa fa-certificate fs-5 me-2 text-danger"></i> {{first_name}} is unverified</span>
-                      <span class="fs-5 fw-bold" ng-if="member.status == 1"><i class="fa fa-certificate fs-5 me-2 text-primary"></i> {{first_name}} is email verified</span>
-                      <span class="fs-5 fw-bold" ng-if="member.status == 2"><i class="fa fa-certificate fs-5 me-2 text-success"></i> {{first_name}} is admin verified</span>
+
+                      <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 0">
+                        <span class="fa-stack me-2" style="font-size: 12px;">
+                          <i class="fa fa-certificate fa-stack-2x text-danger"></i>
+                          <i class="fa fa-times fa-stack-1x text-white"></i>
+                        </span>
+                         <span>{{first_name}} is unverified</span>
+                      </span>
+                      
+                      <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 1">
+                        <i class="fa fa-check-circle text-primary me-2"></i>
+                        <span>{{first_name}} is email verified</span>
+                      </span>
+
+                      <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 2">
+                        <span class="fa-stack me-2" style="font-size: 12px;">
+                          <i class="fa fa-certificate fa-stack-2x text-success"></i>
+                          <i class="fa fa-check fa-stack-1x text-white"></i>
+                        </span>{{first_name}} is photo verified</span>
+                      </span>
+
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -163,7 +180,7 @@
     </div>
   </div>
     
-<?php 
+<?php
     require('./templates/template_footer.php');
 ?>
   <script src="<?php echo $base_url; ?>assets/front/js/jquery-3.5.1.slim.min.js"></script>
