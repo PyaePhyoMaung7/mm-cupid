@@ -53,9 +53,22 @@
 
         $response_data['city'] = $city;
 
+        $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$member_id'";
+        $gallery_res = $mysqli->query($gallery_sql);
+        $images = [];
+        $photo  = [];
+        while($row = $gallery_res->fetch_assoc()){
+            $image  = $row['name'];
+            $sort   = (int) $row['sort'];
+            $photo_path = $base_url . 'assets/uploads/' .  $member_id . '/' . $image;
+            $photo['image'] = $photo_path;
+            $photo['sort']  = $sort;
+            array_push($images, $photo);
+        }
+        $response_data['images'] = $images;
+
         $response['data'] = $response_data;
         $response['status'] = '200';
-        $response['data'] = $response_data;
         
         echo json_encode($response);
     }

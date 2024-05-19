@@ -45,7 +45,18 @@ require ('./templates/template_header.php')
               <div id="upper-container" class="position-absolute top-0 p-4" style="width: 100%;">
                 <div class="d-flex text-white justify-content-between">
                   <div class="d-flex align-items-center">
-                    <span class="fw-bold fs-4 me-2" >{{member.username}}, {{member.age}}</span> <i class="fa fa-circle text-success" style="font-size: 7px;"></i>
+
+                    <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 2">
+                      <span class="fa-stack me-2" style="font-size: 14px;">
+                        <i class="fa fa-certificate fa-stack-2x text-primary"></i>
+                        <i class="fa fa-check fa-stack-1x text-white"></i>
+                      </span>
+                    </span> 
+                    <span class="fw-bold fs-4 me-2" >
+                      {{member.username}}, {{member.age}}
+                    </span>
+                    <i class="fa fa-circle text-success" style="font-size: 7px;"></i>
+
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     
@@ -139,7 +150,7 @@ require ('./templates/template_header.php')
 
                       <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 2">
                         <span class="fa-stack me-2" style="font-size: 12px;">
-                          <i class="fa fa-certificate fa-stack-2x text-success"></i>
+                          <i class="fa fa-certificate fa-stack-2x text-primary"></i>
                           <i class="fa fa-check fa-stack-1x text-white"></i>
                         </span>{{first_name}} is photo verified</span>
                       </span>

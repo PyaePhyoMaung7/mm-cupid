@@ -97,7 +97,7 @@
             <div class="p-3 rounded-4 bg-body-tertiary mb-2">
                 <div class="fs-5 fw-bold mb-2">Get verified</div>
                 <div class="mb-3">Verification ups your chances by showing people they can trust you</div>
-                <button class="btn btn-dark w-100 fs-5 rounded-pill"><i class="fa fa-circle-check"></i> Verify By Photo</button>
+                <button class="btn btn-dark w-100 fs-5 rounded-pill"><i class="fa fa-check-circle"></i> Verify By Photo</button>
             </div>
         </div>
     </div>

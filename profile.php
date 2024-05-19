@@ -241,14 +241,6 @@
 ?>
 
     <script src="<?php echo $base_url; ?>assets/front/js/profile.js?v=20240516"></script>
-    <script>
-        // images.forEach(image => {
-        //     $('#preview'+image.sort).html(`<img src= ${image.image} class="" style="width: 100%; height: 100%; object-fit: cover" alt="Image Preview"/>`);
-        //     $('#upload-icon-'+image.sort).hide();
-        //     $('.change-photo'+image.sort).show();
-        //     $('#preview'+image.sort).removeClass('d-none');
-        // });
-    </script>
 <?php
     require('./templates/template_html_end.php');
 ?>

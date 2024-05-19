@@ -5,11 +5,11 @@
 <footer class="article-container-footer">
     <a href="<?php echo $base_url ;?>index" class="text-decoration-none">
         <button class="button is-ghost text-secondary d-flex flex-column align-items-center" <?php echo $current_page == 'index' ? 'style = "background-color: #dfdad7; color: black !important""' : ''; ?>>
-            <i class="fa fa-home fs-3 me-1"></i>
+            <i class="fa fa-home fs-4 me-1"></i>
             <span>Home</span>
         </button>
     </a>
-    <button class="button is-ghost">
+    <button class="button is-ghost text-secondary d-flex flex-column align-items-center" <?php echo $current_page == 'encounter' ? 'style = "background-color: #dfdad7; color: black !important""' : ''; ?>>
     <svg
         data-origin="pipeline"
         aria-hidden="true"
@@ -28,16 +28,16 @@
     </svg>
     Encounter
     </button>
-    <button class="button is-ghost text-secondary d-flex align-items-center">
+    <button class="button is-ghost text-secondary d-flex flex-column align-items-center" <?php echo $current_page == 'likes' ? 'style = "background-color: #dfdad7; color: black !important""' : ''; ?>>
     <i class="fa fa-heart fs-4 me-1"></i>
     <span>Likes</span>
     </button>
-    <button class="button is-ghost text-secondary d-flex align-items-center">
+    <button class="button is-ghost text-secondary d-flex flex-column align-items-center" <?php echo $current_page == 'chats' ? 'style = "background-color: #dfdad7; color: black !important""' : ''; ?>>
     <i class="fa fa-commenting fs-4 me-1"></i>
     <span>Chats</span>
     </button>
     <a href="<?php echo $base_url ;?>profile" class="text-decoration-none">
-        <button class="button is-ghost text-secondary d-flex align-items-center " <?php echo $current_page == 'profile' ? 'style = "background-color: #dfdad7; color: black !important"' : ''; ?>>
+        <button class="button is-ghost text-secondary d-flex flex-column align-items-center " <?php echo $current_page == 'profile' ? 'style = "background-color: #dfdad7; color: black !important"' : ''; ?>>
             <i class="fa fa-user fs-4 me-1"></i>
             <span>Profile</span>
         </button>
