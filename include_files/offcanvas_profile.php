@@ -1,8 +1,6 @@
 <div class="offcanvas offcanvas-end position-absolute right-0" style="width: 650px;" data-bs-backdrop="false" tabindex="-1" id="offcanvasUserProfile" aria-labelledby="offcanvasUserProfile">
     <div class="offcanvas-header position-sticky bg-white py-2 top-0 z-3 px-4 d-flex justify-content-between align-items-center fw-bold" style="font-size: 17px;">
         <div type="button" ng-click="backSearchOffcanvas()" class="fs-4 float-left" data-bs-dismiss="offcanvas" aria-label="Close" aria-label="Back"><i class="fa fa-chevron-left"></i></div>
-        <div>10 % complete</div>
-        <div>Preview</div>
     </div>
     <div class="offcanvas-body py-0">
         <div id="profile-offcanvas">
@@ -77,15 +75,6 @@
             </div>
             <div class="p-3 d-flex justify-content-between align-items-center rounded-4 bg-body-tertiary mb-2">
                 <div>
-                    <div class="fs-5 fw-bold mb-2">Why you are here</div>
-                    <div>Here to date</div>
-                </div>
-                <div>
-                    <i class="fa fa-chevron-right fs-5"></i>
-                </div>
-            </div>
-            <div class="p-3 d-flex justify-content-between align-items-center rounded-4 bg-body-tertiary mb-2">
-                <div>
                     <div class="fs-5 fw-bold mb-2">About me</div>
                     <div>{{member.about}}</div>
                 </div>
@@ -93,7 +82,11 @@
                     <i class="fa fa-chevron-right fs-5"></i>
                 </div>
             </div>
-            
+
+            <div class="p-3 mb-2">
+                <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfileEdit" aria-controls="offcanvasUserProfileEdit"><i class="fa fa-edit"></i> Edit User Details</button>
+            </div>
+
             <div class="p-3 rounded-4 bg-body-tertiary mb-2">
                 <div class="fs-5 fw-bold mb-2">Get verified</div>
                 <div class="mb-3">Verification ups your chances by showing people they can trust you</div>
