@@ -22,7 +22,6 @@ app.controller('myCtrl', function($scope, $http, $window){
         }).then(
             function (response) {
                 $scope.loading = false;
-                console.log(response);
                 if(response.data.status == "200") {
                     $scope.member = response.data.data;
                     $scope.bindImages($scope.member.images);
@@ -43,7 +42,23 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.update = function () {
-       console.log($scope.member);
+        $scope.member.hobbies = [];
+        $(".hobby:checked").each(function(){
+            $scope.member.hobbies.push($(this).val());
+        });
+
+        $http({
+            method: 'POST',
+            url: base_url+'api/update_profile.php',
+            data: $scope.member,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+            }
+        );
     }
 
     $scope.bindImages = function (images) {
@@ -101,14 +116,13 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.chooseMinAge = function () {
-        console.log($scope.min_age);
         $scope.max_ages = [];
         if($scope.min_age == ''){
             for (let i = 18; i <= 55; i++) {
                 $scope.max_ages.push(i);
             }
         }else{
-            for (let i = $scope.min_age; i <= 55; i++) {
+            for (let i = $scope.member.partner_min_age; i <= 55; i++) {
                 $scope.max_ages.push(i);
             }
         }
@@ -121,7 +135,7 @@ app.controller('myCtrl', function($scope, $http, $window){
                 $scope.min_ages.push(i);
             }
         }else{
-            for (let i = 18; i <= $scope.max_age; i++) {
+            for (let i = 18; i <= $scope.member.partner_max_age; i++) {
                 $scope.min_ages.push(i);
             }
         }
