@@ -8,7 +8,7 @@
     $response_data = [];
     while($row = $result->fetch_assoc()){
         $id = $row['id'];
-        $name = $row['name'];
+        $name = htmlspecialchars($row['name']);
         $data['id'] = $id;
         $data['name'] = $name;
         array_push($response_data, $data);

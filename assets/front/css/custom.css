@@ -400,6 +400,10 @@ input[type="radio"]:checked + label.gender-label {
   background-color: yellow; /* Change to your desired color */
 }
 
+#profile-offcanvas-edit #update-form-container::-webkit-scrollbar{
+  width: 0px;
+}
+
 @media(min-width: 1080px) {
   .carousel-inner, .carousel-indicators {
     width: 35% !important;

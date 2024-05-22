@@ -58,7 +58,7 @@
             <div class="p-3 d-flex justify-content-between align-items-center rounded-4 bg-body-tertiary mb-2">
                 <div>
                     <div class="fs-5 fw-bold mb-2">{{member.username}}, {{member.age}}</div>
-                    <div>{{member.gender}}, {{member.city}}</div>
+                    <div>{{member.gender_name}}, {{member.city_name}}</div>
                 </div>
                 <div>
                     <i class="fa fa-chevron-right fs-5"></i>
@@ -82,9 +82,27 @@
                     <i class="fa fa-chevron-right fs-5"></i>
                 </div>
             </div>
+            <div class="p-3 d-flex justify-content-between align-items-center rounded-4 bg-body-tertiary mb-2">
+                <div>
+                    <div class="fs-5 fw-bold mb-2">Height</div>
+                    <div>{{member.height}}</div>
+                </div>
+                <div>
+                    <i class="fa fa-chevron-right fs-5"></i>
+                </div>
+            </div>
+            <div class="p-3 d-flex justify-content-between align-items-center rounded-4 bg-body-tertiary mb-2">
+                <div>
+                    <div class="fs-5 fw-bold mb-2">Phone</div>
+                    <div>{{member.phone}}</div>
+                </div>
+                <div>
+                    <i class="fa fa-chevron-right fs-5"></i>
+                </div>
+            </div>
 
             <div class="p-3 mb-2">
-                <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfileEdit" aria-controls="offcanvasUserProfileEdit"><i class="fa fa-edit"></i> Edit User Details</button>
+                <button class="btn btn-dark w-100 fs-5 rounded-pill" ng-click="bindInfo()" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfileEdit" aria-controls="offcanvasUserProfileEdit"><i class="fa fa-edit"></i> Edit User Details</button>
             </div>
 
             <div class="p-3 rounded-4 bg-body-tertiary mb-2">

@@ -7,9 +7,9 @@
     </div>
     <div class="offcanvas-body py-0">
         <div id="profile-offcanvas-edit">
-            <form id="register-form" action="<?php echo $base_url; ?>register.php" method="POST" enctype="multipart/form-data">
-                <div>
-                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter User Name" name="username" id="username" ng-model="username" ng-blur="validate('username')" ng-change="checkValidation('username');"/>
+            <form id="update-form" action="<?php echo $base_url; ?>register.php" method="POST" enctype="multipart/form-data">
+                <div id="update-form-container">
+                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter User Name" name="username" id="username" ng-model="member.username" ng-blur="validate('username')" ng-change="checkValidation('username');"/>
                     <p class="text-danger" ng-if="username_error">{{username_error_msg}}</p>
                     
                     <!-- <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Email" name="email" id="email" ng-model="email" ng-blur="validate('email')"  ng-change="checkValidation('email');"/>
@@ -29,27 +29,27 @@
                     </div> -->
                     
                     
-                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Phone" name="phone" id="phone" ng-model="phone" ng-blur="validate('phone')"  ng-change="checkValidation('phone');"/>
+                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Phone" name="phone" id="phone" ng-model="member.phone" ng-blur="validate('phone')"  ng-change="checkValidation('phone');"/>
                     <p class="text-danger" ng-if="phone_error">{{phone_error_msg}}</p>
 
-                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Your Birthday" name="birthday" id="birthday" ng-model="birthday" ng-blur="validate('birthday')" ng-change="checkValidation('birthday');"/>
+                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Your Birthday" name="birthday" id="birthday" ng-model="member.birthday" ng-blur="validate('birthday')" ng-change="checkValidation('birthday');"/>
                     <p class="text-danger" ng-if="birthday_error">{{birthday_error_msg}}</p>
 
-                    <select name="city" ng-model="city" id="city" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('city')" ng-change="checkValidation('city');">
-                        <option value="" selected>Choose City</option>
+                    <select name="city" ng-model="member.city_id" id="city" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('city')" ng-change="checkValidation('city');">
+                        <option value="" >Choose City</option>
                         <option value="{{city.id}}" ng-repeat="city in cities">{{city.name}}</option>
                     </select>
                     <p class="text-danger" ng-if="city_error">{{city_error_msg}}</p>
 
                     <div class="d-flex justify-content-between">
-                        <select name="hfeet" ng-model="hfeet" id="hfeet" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:48%;" ng-blur="validate('hfeet')" ng-change="checkValidation('hfeet');">
+                        <select name="hfeet" ng-model="member.hfeet" id="hfeet" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:48%;" ng-blur="validate('hfeet')" ng-change="checkValidation('hfeet');">
                             <option value="" selected>feet</option>
                             <option value="4">4'</option>
                             <option value="5">5'</option>
                             <option value="6">6'</option>
                             <option value="7">7'</option>
                         </select>
-                        <select name="hinches" ng-model="hinches" id="hinches" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:48%;" ng-blur="validate('hinches')" ng-change="checkValidation('hinches');">
+                        <select name="hinches" ng-model="member.hinches" id="hinches" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:48%;" ng-blur="validate('hinches')" ng-change="checkValidation('hinches');">
                             <option value="" selected>inches</option>
                             <option value='0'>0"</option>
                             <option value='1'>1"</option>
@@ -68,13 +68,13 @@
                     <p class="text-danger" ng-if="hfeet_error">{{hfeet_error_msg}}</p>
                     <p class="text-danger" ng-if="hinches_error">{{hinches_error_msg}}</p>
                     
-                    <textarea name="education" ng-model="education" id="education" cols="30" rows="3" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Your Education" ng-blur="validate('education')" ng-change="checkValidation('education')"></textarea>
+                    <textarea name="education" ng-model="member.education" id="education" cols="30" rows="3" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Your Education" ng-blur="validate('education')" ng-change="checkValidation('education')"></textarea>
                     <p class="text-danger" ng-if="education_error">{{education_error_msg}}</p>
 
-                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Please tell us about yourself" name="about" id="about" ng-model="about" ng-blur="validate('about')" ng-change="checkValidation('about')"/>
+                    <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Please tell us about yourself" name="about" id="about" ng-model="member.about" ng-blur="validate('about')" ng-change="checkValidation('about')"/>
                     <p class="text-danger" ng-if="about_error">{{about_error_msg}}</p>
 
-                    <select name="religion" ng-model="religion" id="religion" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('religion')" ng-change="checkValidation('religion');">
+                    <select name="religion" ng-model="member.religion" id="religion" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('religion')" ng-change="checkValidation('religion');">
                         <option value="" selected>Choose your religion</option>
                         <option value="1">Christianity</option>
                         <option value="2">Islam</option>
@@ -91,11 +91,12 @@
 
                     <p class="mt-2">Please choose your gender.</p>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input gender" type="radio" id="male" name="gender" ng-model="gender" value="0" ng-blur="validate('gender')" ng-click="validate('gender')" ng-change="checkValidation('gender')">
+                        <input class="form-check-input gender" type="radio" id="male" name="gender" ng-model="member.gender" value="0" ng-blur="validate('gender')" ng-click="validate('gender')" >
                         <label class="form-check-label" for="male">Male</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input gender" type="radio" id="female" name="gender" ng-model="gender" value="1" ng-blur="validate('gender')" ng-click="validate('gender')" ng-change="checkValidation('gender')">
+                    <!-- ng-change="checkValidation('gender')" -->
+                    <div class="form-check form-check-inline"> 
+                        <input class="form-check-input gender" type="radio" id="female" name="gender" ng-model="member.gender" value="1" ng-blur="validate('gender')" ng-click="validate('gender')" >
                         <label class="form-check-label" for="female">Female</label>
                     </div>
                     <p class="text-danger" ng-if="gender_error">{{gender_error_msg}}</p>
@@ -103,7 +104,7 @@
                     <p class="form-check-label mt-2" for="male">Please choose your hobbies.</p>
                     <div class="row ms-0">
                         <div class="col-6 col-md-4 form-check" ng-repeat="hobby in hobbies">
-                            <input class="form-check-input hobby" name="hobbies[]" id="hobby-{{hobby.id}}" type="checkbox" value="{{hobby.id}}" ng-model="selected_hobbies"  ng-blur="validate('selected-hobbies')" ng-change="checkValidation('selected-hobbies');">
+                            <input class="form-check-input hobby" name="hobbies[]" id="hobby-{{hobby.id}}" type="checkbox" value="{{hobby.id}}"  ng-blur="validate('selected-hobbies')" >
                             <label class="form-check-label" for="hobby-{{hobby.id}}">{{hobby.name}}</label>
                         </div>
                     </div>
@@ -111,15 +112,16 @@
 
                     <p class="form-check-label d-block mt-2" for="male">Please choose your partner gender.</p>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input partner-gender" type="radio" id="partner-male" name="partner-gender" ng-model="partner_gender" value="0" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" ng-change="checkValidation('partner-gender')">
+                    <!-- ng-change="checkValidation('partner-gender')" -->
+                        <input class="form-check-input partner-gender" type="radio" id="partner-male" name="partner-gender" ng-model="member.partner_gender" value="0" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" >
                         <label class="form-check-label" for="partner-male">Male</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input partner-gender" type="radio" id="partner-female" name="partner-gender" ng-model="partner_gender" value="1" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" ng-change="checkValidation('partner-gender')">
+                        <input class="form-check-input partner-gender" type="radio" id="partner-female" name="partner-gender" ng-model="member.partner_gender" value="1" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" >
                         <label class="form-check-label" for="partner-female">Female</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input partner-gender" type="radio" id="partner-both" name="partner-gender" ng-model="partner_gender" value="2" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" ng-change="checkValidation('partner-gender')">
+                        <input class="form-check-input partner-gender" type="radio" id="partner-both" name="partner-gender" ng-model="member.partner_gender" value="2" ng-blur="validate('partner-gender')" ng-click="validate('partner-gender')" >
                         <label class="form-check-label" for="partner-both">Both</label>
                     </div>
                     
@@ -128,7 +130,7 @@
 
                     <div class="d-flex justify-content-between">
                         <div style="width:48%;">
-                            <select name="min-age" ng-model="min_age" id="min-age" class="form-control form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2" ng-blur="validate('min-age')" ng-change="chooseMinAge(); checkValidation('min-age');">
+                            <select name="min-age" ng-model="member.partner_min_age" id="min-age" class="form-control form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2" ng-blur="validate('min-age')" ng-change="chooseMinAge(); checkValidation('min-age');">
                                 <option value="" selected>Minimum Age</option>
                                 <option value='{{age}}' ng-repeat="age in min_ages">{{age}}</option>
                             </select>
@@ -136,7 +138,7 @@
                         </div>
                         
                         <div style="width:48%;">
-                            <select name="max-age" ng-model="max_age" id="max-age" class="form-control form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2"  ng-blur="validate('max-age')" ng-change="chooseMaxAge(); checkValidation('max-age');">
+                            <select name="max-age" ng-model="member.partner_max_age" id="max-age" class="form-control form-control-lg w-100 border border-1 border-black rounded rounded-4 mt-2"  ng-blur="validate('max-age')" ng-change="chooseMaxAge(); checkValidation('max-age');">
                                 <option value="" selected>Maximum Age</option>
                                 <option value='{{age}}' ng-repeat="age in max_ages">{{age}}</option>
                             </select>
@@ -144,7 +146,7 @@
                         </div>
                     </div>
                     
-                    <textarea name="work" ng-model="work" id="work" cols="30" rows="3" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('work')" ng-change="checkValidation('work');" placeholder="Enter Your Occupation"></textarea>
+                    <textarea name="work" ng-model="member.work" id="work" cols="30" rows="3" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-blur="validate('work')" ng-change="checkValidation('work');" placeholder="Enter Your Occupation"></textarea>
                     <p class="text-danger" ng-if="work_error">{{work_error_msg}}</p>
                     
                     <!-- <button type="button" ng-click="next()" disabled id="next-btn" class="btn btn-dark rounded rounded-5 btn-lg mt-4" style="width:100%;">
@@ -218,7 +220,7 @@
                     <input type="file" name="upload4" id="upload4" onchange="previewImage('4')" class="d-none">
                     <input type="file" name="upload5" id="upload5" onchange="previewImage('5')" class="d-none">
                     <input type="file" name="upload6" id="upload6" onchange="previewImage('6')" class="d-none">
-                    <button type="button" ng-click="register()" disabled id="register-btn" class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
+                    <button type="button" ng-click="update()" id="update-btn" class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
                         Update
                     </button>
 

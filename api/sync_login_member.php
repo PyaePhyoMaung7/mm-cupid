@@ -46,6 +46,7 @@
         $data['city_id']        = (int) $row['city_id'];
         $data['city_name']      = htmlspecialchars($row['city_name']);
         $data['birthday']       = htmlspecialchars($row['date_of_birth']);
+        $data['height']         = $row['height_feet'] . "' " . $row['height_inches'] . '"';
         $data['hfeet']          = (int)$row['height_feet'];
         $data['hinches']        = (int) $row['height_inches'];
         $data['education']      = htmlspecialchars($row['education']);
@@ -57,8 +58,7 @@
         $data['partner_min_age']= (int) $row['partner_min_age'];
         $data['partner_max_age']= (int) $row['partner_max_age'];
         $data['work']           = htmlspecialchars($row['work']);
-
-
+        
         $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$member_id'";
         $gallery_res = $mysqli->query($gallery_sql);
         $images = [];

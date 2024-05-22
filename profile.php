@@ -240,8 +240,25 @@
 <?php 
     require('./templates/template_footer.php');
 ?>
-
     <script src="<?php echo $base_url; ?>assets/front/js/profile.js?v=20240516"></script>
+    <script>
+        let today_date = new Date();
+        let last_18_years_ago_date;
+        if(today_date.getFullYear()%4 == 0 && today_date.getMonth() == 1 && today_date.getDate() == 29){
+            last_18_years_ago_date = new Date(today_date.getFullYear() - 18, today_date.getMonth(), today_date.getDate()-1);
+        }else{
+            last_18_years_ago_date = new Date(today_date.getFullYear() - 18, today_date.getMonth(), today_date.getDate());
+        }
+        $( "#birthday" ).datepicker({
+                changeYear: true,
+                changeMonth: true, 
+                dateFormat: 'yy-mm-dd',
+                maxDate: last_18_years_ago_date,
+                yearRange: "-60:+0"
+            });
+
+        $("#birthday").prop('readonly', true);
+    </script>
 <?php
     require('./templates/template_html_end.php');
 ?>

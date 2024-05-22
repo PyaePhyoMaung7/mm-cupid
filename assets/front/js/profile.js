@@ -1,9 +1,14 @@
 var app = angular.module("myApp", []);
 
 app.controller('myCtrl', function($scope, $http, $window){
-    $scope.member = {};
-    $scope.member_images = [];
-    $scope.loading = false;
+    $scope.member           = {};
+    $scope.member_images    = [];
+    $scope.cities           = [];
+    $scope.hobbies          = [];
+    $scope.selectedHobbies  = ['1','3','5'];
+    $scope.loading          = false;
+    $scope.min_ages         = [];
+    $scope.max_ages         = [];
     
     $scope.init = function () {
         const data = {};
@@ -21,10 +26,24 @@ app.controller('myCtrl', function($scope, $http, $window){
                 if(response.data.status == "200") {
                     $scope.member = response.data.data;
                     $scope.bindImages($scope.member.images);
-                    $scope.bindInfo();
+                    $scope.getCities();
+                    $scope.getHobbies();
+
+                    for (let i = 18; i <= $scope.member.partner_max_age; i++) {
+                        $scope.min_ages.push(i);
+                    }
+                    
+                
+                    for (let i = $scope.member.partner_min_age; i <= 55; i++) {
+                        $scope.max_ages.push(i);
+                    }
                 }
             }
         )
+    }
+
+    $scope.update = function () {
+       console.log($scope.member);
     }
 
     $scope.bindImages = function (images) {
@@ -37,23 +56,74 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.bindInfo = function () {
-        $scope.username = $scope.member.username;
-        $scope.phone    = $scope.member.phone;
-        $scope.birthday = $scope.member.birthday;
-        $scope.city     = $scope.member.city_id;
-        $scope.hfeet    = $scope.member.hfeet;
-        $scope.hinches  = $scope.member.hinches;
-        $scope.education= $scope.member.education;
-        $scope.about    = $scope.member.about; 
-        $scope.work = $scope.member.work;
-        $scope.gender = $scope.member.gender;
-        $scope.partner_gender = $scope.member.partner_gender;
-        $scope.partner_min_age = $scope.member.partner_min_age;
-        $scope.partner_max_age = $scope.member.partner_max_age;
-        $scope.religion = $scope.member.religion;
+        $scope.member.city_id += '';
+        $scope.member.hfeet += '';
+        $scope.member.hinches += '';
+
+        $scope.hobbies.forEach(hobby => {
+            if($scope.selectedHobbies.includes(hobby.id)) {
+                $('#hobby-'+hobby.id).prop("checked",true);
+            }
+        })
+        
+        $scope.member.partner_min_age += '';
+        $scope.member.partner_max_age += '';
+
+        $scope.member.religion += '';
+        $scope.member.gender += '';
+        $scope.member.partner_gender += '';
     }
 
     $scope.backUserProfile = function () {
         $('#user-profile-btn').click();
+    }
+
+    $scope.getCities = function () {
+        $http({
+            method: 'GET',
+            url: base_url+'api/get_cities.php',
+        }).then(
+            function (response) {
+                $scope.cities = response.data;
+            }
+        )
+    }
+
+    $scope.getHobbies = function () {
+        $http({
+            method: 'GET',
+            url: base_url+'api/get_hobbies.php',
+        }).then(
+            function (response) {
+                $scope.hobbies = response.data;
+            }
+        )
+    }
+
+    $scope.chooseMinAge = function () {
+        console.log($scope.min_age);
+        $scope.max_ages = [];
+        if($scope.min_age == ''){
+            for (let i = 18; i <= 55; i++) {
+                $scope.max_ages.push(i);
+            }
+        }else{
+            for (let i = $scope.min_age; i <= 55; i++) {
+                $scope.max_ages.push(i);
+            }
+        }
+    }
+
+    $scope.chooseMaxAge = function () {
+        $scope.min_ages = [];
+        if($scope.max_age == ""){
+            for (let i = 18; i <= 55; i++) {
+                $scope.min_ages.push(i);
+            }
+        }else{
+            for (let i = 18; i <= $scope.max_age; i++) {
+                $scope.min_ages.push(i);
+            }
+        }
     }
 });

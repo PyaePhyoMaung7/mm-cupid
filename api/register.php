@@ -8,6 +8,7 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $request_data = file_get_contents('php://input');
         $data = json_decode($request_data,true);
+        
         $username = $mysqli->real_escape_string($data['username']);
         $email = $mysqli->real_escape_string($data['email']);
         $password = $data['password'];
