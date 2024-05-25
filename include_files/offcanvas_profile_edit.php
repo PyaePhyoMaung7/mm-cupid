@@ -162,10 +162,6 @@
                     <label for="work">Occupation</label>
                     <textarea name="work" ng-model="member_edit.work" id="work" cols="30" rows="3" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" ng-change="validate()" placeholder="Enter Your Occupation"></textarea>
                     <p class="text-danger" ng-if="work_error">{{work_error_msg}}</p>
-                    
-                    <!-- <button type="button" ng-click="next()" disabled id="next-btn" class="btn btn-dark rounded rounded-5 btn-lg mt-4" style="width:100%;">
-                        Next
-                    </button> -->
                 </div>
 
                 <div>
@@ -178,56 +174,6 @@
                     <?php
                         }
                     ?>
-                    <!-- <table class="mt-2" style="width: 100%; border-collapse: separate; border-spacing: .5em; table-layout: fixed">
-                        <tr>
-                            <td class="" colspan="2" rowspan="2">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" ng-click="browseFile()" style="height: 48vh;">
-                                    <div id="preview1" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('1')" class="btn btn-dark p-2 rounded-3 hide position-absolute change-photo change-photo1" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" style="cursor: pointer" id="upload-icon-1" onclick="browseImage('1')"></i>
-                                </div>
-                            </td>
-                            <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh;">
-                                    <div id="preview2" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('2')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo2" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" onclick="browseImage('2')" style="cursor: pointer" id="upload-icon-2"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh;">
-                                    <div id="preview3" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('3')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo3" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" onclick="browseImage('3')" style="cursor: pointer" id="upload-icon-3"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh;">
-                                    <div id="preview4" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('4')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo4" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" onclick="browseImage('4')" style="cursor: pointer" id="upload-icon-4"></i>
-                                </div>
-                            </td>
-                            <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh;">
-                                    <div id="preview5" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('5')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo5" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" onclick="browseImage('5')" style="cursor: pointer" id="upload-icon-5"></i>
-                                </div>
-                            </td>
-                            <td class="">
-                                <div class="bg-body-secondary position-relative overflow-hidden rounded-2 d-flex justify-content-center align-items-center" style="height: 23vh;">
-                                    <div id="preview6" class="d-none w-100 h-100"></div>
-                                    <label for="" onclick="browseImage('6')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo6" style="opacity: 0.8" >Change</label>
-                                    <i class="fa fa-upload fs-4" onclick="browseImage('6')" style="cursor: pointer" id="upload-icon-6"></i>
-                                </div>
-                            </td>
-                        </tr>
-                    </table> -->
                     <button type="button" ng-click="update()" id="update-btn" class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
                         Update
                     </button>
@@ -235,10 +181,20 @@
                     <input type="hidden" name="form-sub" value="1">
                     <input type="hidden" id="member-id" name="member-id">
                     <input type="hidden" id="email-confirm-code" name="email-confirm-code">
-                    
                 </div>
-                
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    const offcanvas_body1 = document.querySelectorAll('.offcanvas-body')[1];
+    offcanvas_body1.addEventListener('scroll', function() {
+    let offcanvas_header1 = document.querySelectorAll('.offcanvas-header')[1];
+    if (offcanvas_body1.scrollTop > 0) {
+        offcanvas_header1.classList.add('border-bottom', 'border-secondary-subtle');
+    } else {
+        offcanvas_header1.classList.remove('border-bottom', 'border-secondary-subtle');
+    }
+    });
+</script>

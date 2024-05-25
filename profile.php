@@ -22,7 +22,7 @@
                     <div class="justify-content-center">
                         <div class="flex" style="font-size: 20px;">
                             <i class="fa fa-cog fs-4" style="margin-right: 7px;"></i>
-                            <button class="btn" type="button" >
+                            <button class="" style="outline: none; background: transparent; border: 1px solid transparent;" type="button" >
                                 <i class="fa fa-user fs-4" id="user-profile-btn" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfile" aria-controls="offcanvasUserProfile"></i>
                             </button> 
                             <?php require('./include_files/offcanvas_profile.php'); ?>
