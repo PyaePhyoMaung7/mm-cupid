@@ -164,7 +164,7 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-name">Company Name <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-name">Company name <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <input type="text" id="company-name" name="company-name" value="<?php echo $company_name; ?>" class="form-control" placeholder="Enter company name">
@@ -172,7 +172,7 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-email">Company Email <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-email">Company email <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <input type="text" id="company-email" name="company-email" value="<?php echo $company_email; ?>" class="form-control" placeholder="Enter company email">
@@ -180,7 +180,7 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-phone">Company Phone <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-phone">Company phone <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <input type="text" id="company-phone" name="company-phone" value="<?php echo $company_phone; ?>" class="form-control" placeholder="Enter company phone">
@@ -189,7 +189,7 @@
 
                             
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-address">Company Address <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="company-address">Company address <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <input type="text" id="company-address" name="company-address" value="<?php echo $company_address; ?>" class="form-control" placeholder="Enter company address">
@@ -197,7 +197,7 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Company Logo <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Company logo <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6">
                                     <div id="preview-image" class="overflow-hidden" style="border:1px dashed grey; border-radius: 10px; width: 300px; height: 300px;">

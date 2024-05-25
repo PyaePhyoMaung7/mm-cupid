@@ -3,6 +3,7 @@
     require('../site-config/connect.php');
     require('../site-config/config.php');
     require('../site-config/include_functions.php');
+    require('../site-config/check_member_auth.php');
 
     $response = [];
     $response['status'] = '500';

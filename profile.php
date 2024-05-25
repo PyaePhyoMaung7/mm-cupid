@@ -250,12 +250,12 @@
             last_18_years_ago_date = new Date(today_date.getFullYear() - 18, today_date.getMonth(), today_date.getDate());
         }
         $( "#birthday" ).datepicker({
-                changeYear: true,
-                changeMonth: true, 
-                dateFormat: 'yy-mm-dd',
-                maxDate: last_18_years_ago_date,
-                yearRange: "-60:+0"
-            });
+            changeYear: true,
+            changeMonth: true, 
+            dateFormat: 'yy-mm-dd',
+            maxDate: last_18_years_ago_date,
+            yearRange: "-60:+0"
+        });
 
         $("#birthday").prop('readonly', true);
     </script>

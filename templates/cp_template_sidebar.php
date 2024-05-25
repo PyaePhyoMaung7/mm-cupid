@@ -68,9 +68,16 @@
                     <li><a href="<?php echo $admin_base_url; ?>show_hobby.php">Listing</a></li>
                   </ul>
                 </li>
+
                 <li><a href="<?php echo $admin_base_url; ?>setting.php" ><i class="fa fa-gear"></i> Setting </a></li>
                 <li><a href="<?php echo $admin_base_url; ?>show_member.php" ><i class="fa fa-users"></i> Member Mangement </a></li>
-              </a>
+                
+                <li><a><i class="fa fa-newspaper-o"></i>Knowledge Management<span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="<?php echo $admin_base_url; ?>create_post.php">Create</a></li>
+                    <li><a href="<?php echo $admin_base_url; ?>show_post.php">Listing</a></li>
+                  </ul>
+                </li>
                 <?php 
                 }
                 ?>

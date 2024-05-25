@@ -73,6 +73,14 @@
         }
         $data['images']     = $images;
 
+        $hobbies    = [];
+        $hobby_sql  = "SELECT hobby_id FROM `member_hobbies` WHERE member_id = '$member_id'";
+        $hobby_res  = $mysqli->query($hobby_sql);
+        while($hobby_row = $hobby_res->fetch_assoc()){
+            array_push($hobbies, $hobby_row['hobby_id']);
+        }
+        $data['hobbies']    = $hobbies;
+
         $response['data']   = $data;
         $response['status'] = '200';
         

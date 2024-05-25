@@ -6,6 +6,7 @@ RewriteEngine On
 
 RewriteRule ^email-confirm$ email_confirm.php [L,QSA]
 RewriteRule ^index$ index.php [L]
+RewriteRule ^knowledge$ knowledge.php [L]
 RewriteRule ^login$ login.php [L]
 RewriteRule ^logout$ logout.php [L]
 RewriteRule ^profile$ profile.php [L]
