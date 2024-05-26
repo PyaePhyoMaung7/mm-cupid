@@ -28,15 +28,6 @@ app.controller('myCtrl', function($scope, $http, $window){
                     $scope.bindImages($scope.member.images);
                     $scope.getCities();
                     $scope.getHobbies();
-
-                    for (let i = 18; i <= $scope.member.partner_max_age; i++) {
-                        $scope.min_ages.push(i);
-                    }
-                
-                    for (let i = $scope.member.partner_min_age; i <= 55; i++) {
-                        $scope.max_ages.push(i);
-                    }
-
                     $scope.bindInfo();
                 }
             }
@@ -72,6 +63,16 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.bindInfo = function () {
+        $scope.min_ages         = [];
+        $scope.max_ages         = [];
+        for (let i = 18; i <= $scope.member.partner_max_age; i++) {
+            $scope.min_ages.push(i);
+        }
+    
+        for (let i = $scope.member.partner_min_age; i <= 55; i++) {
+            $scope.max_ages.push(i);
+        }
+
         $scope.member.city_id += '';
         $scope.member.hfeet += '';
         $scope.member.hinches += '';
@@ -144,42 +145,6 @@ app.controller('myCtrl', function($scope, $http, $window){
             }
         }
         $scope.validate();
-    }
-
-    $scope.updatePhoto = function () {
-        const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif'];
-        for (let i = 1; i <= 6; i++) {
-            const input = $('#upload'+i)[0];
-            if(input.files && input.files.length > 0) {
-                const fileName = input.files[0].name;
-                const fileExtension = fileName.split('.').pop().toLowerCase();
-                if(extensions.includes(fileExtension)) {
-                    const url = base_url + 'api/update_photo.php';
-                    const fileInput = document.getElementById('upload'+i);
-                    const file = fileInput.files[0];
-                    let form_data = new FormData();
-                    form_data.append('file', file);
-                    form_data.append('sort', i);
-                    $http({
-                        method: 'POST',
-                        url: url,
-                        data: form_data,
-                        headers: {
-                          'Content-Type': undefined
-                        }
-                    }).then(
-                        function (response) {
-                            console.log(response);
-                        },
-                        function (error) {
-                            console.log(error);
-                        }
-                    );
-                }else{
-                    alert('Your uploaded file type is not supported!');
-                }
-            }
-        }
     }
 
     $scope.validate = function () {
@@ -301,6 +266,44 @@ app.controller('myCtrl', function($scope, $http, $window){
         }else{
             $('#update-btn').prop('disabled',false);
         }
-
     }
+
+    $scope.updatePhoto = function () {
+        const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif'];
+        for (let i = 1; i <= 6; i++) {
+            const input = $('#upload'+i)[0];
+            if(input.files && input.files.length > 0) {
+                const fileName = input.files[0].name;
+                const fileExtension = fileName.split('.').pop().toLowerCase();
+                if(extensions.includes(fileExtension)) {
+                    const url = base_url + 'api/update_photo.php';
+                    const fileInput = document.getElementById('upload'+i);
+                    const file = fileInput.files[0];
+                    let form_data = new FormData();
+                    form_data.append('file', file);
+                    form_data.append('sort', i);
+                    $http({
+                        method: 'POST',
+                        url: url,
+                        data: form_data,
+                        headers: {
+                          'Content-Type': undefined
+                        }
+                    }).then(
+                        function (response) {
+                            if(response.data.status == '200') {
+                                $scope.init();
+                            }
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
+                }else{
+                    alert('Your uploaded file type is not supported!');
+                }
+            }
+        }
+    }
+    
 });

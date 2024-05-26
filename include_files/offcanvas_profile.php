@@ -128,6 +128,7 @@
     function browseImage (index) {
         $('#upload'+index).click();
     }
+    
     function previewImage (index) {
         const fileInput = document.getElementById('upload'+index);
         const preview = document.getElementById('preview'+index);
@@ -176,4 +177,14 @@
         //     $('#register-btn').prop('disabled', true);
         // }
     }
+
+    const offcanvas_body = document.querySelector('.offcanvas-body')
+    offcanvas_body.addEventListener('scroll', function() {
+    let offcanvas_header = document.querySelector('.offcanvas-header');
+    if (offcanvas_body.scrollTop > 0) {
+        offcanvas_header.classList.add('border-bottom', 'border-secondary-subtle');
+    } else {
+        offcanvas_header.classList.remove('border-bottom', 'border-secondary-subtle');
+    }
+    });
 </script>

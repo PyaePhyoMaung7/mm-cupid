@@ -10,12 +10,12 @@ $keywords_content = "myanrmar online dating, online dating, mmcupid, myanmar dat
 
 require ('./templates/template_header.php')
 ?>
-  <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
+<div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
     <div class="loading" ng-if="loading">Loading&#8230;</div>
     <div class="content">
         <div id="post-details" class="vw-100 vh-100 position-absolute top-0 left-0 opacity-0" style="z-index: -10; ">
             <div class="d-flex justify-content-center align-items-center w-100 h-100" id="scroll-container">
-            <div class="rounded-5 overflow-hidden opacity-100 bg-secondary position-relative" style="width: 540px; height: 80vh;">
+            <div class="rounded-5 overflow-hidden opacity-100 bg-secondary position-relative" style="width: 630px; height: 80vh;">
                 <div class="overflow-hidden">
 
                 <!-- upper-container -->
@@ -44,7 +44,7 @@ require ('./templates/template_header.php')
                 </div>
 
                 <div id="post-content" class="overflow-y-auto bg-white" style="width:100%; height: 80vh; z-index: 5;">
-                    <div class="w-100 h-100">
+                    <div class="w-100" style="height: 70%;">
                         <img ng-src="{{post.image}}" class="profile-image w-100 h-100 object-fit-cover" alt="">
                     </div>
                     <div class="p-3" style="margin-bottom: 70px;">
@@ -83,7 +83,7 @@ require ('./templates/template_header.php')
             </article>
         </div>
     </div>
-  </div>
+</div>
 <?php
     require('./templates/template_footer.php');
 ?>
