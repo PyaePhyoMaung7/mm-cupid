@@ -96,9 +96,9 @@
             $images = [];
             $photo  = [];
             while($row2 = $gallery_res->fetch_assoc()){
-                $image  = htmlspecialchars($row2['name']);
-                $sort   = htmlspecialchars($row2['sort']);
-                $photo_path = $base_url . 'assets/uploads/' .  $id . '/' . $image;
+                $image          = htmlspecialchars($row2['name']);
+                $sort           = htmlspecialchars($row2['sort']);
+                $photo_path     = $base_url . 'assets/uploads/' .  $id . '/' . $image;
                 $photo['image'] = $photo_path;
                 $photo['sort']  = $sort;
                 array_push($images, $photo);

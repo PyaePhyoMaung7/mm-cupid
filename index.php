@@ -172,8 +172,7 @@ require ('./templates/template_header.php')
               <div class="row my-2">
                 <div class="col-6 col-sm-4 mb-2 member-profiles" style="height: 36vh;" id="profile-{{index}}" ng-repeat="(index, member) in members">
                   <div class="" style="height: 85%;">
-                    <img ng-src="{{member.thumb}}" ng-click="showMemberProfile(index)" width="100%" height="100%" alt="" class="image rounded rounded-4 object-fit-cover"
-                      data-toggle="modal" data-target="#exampleModal">
+                    <img ng-src="{{member.thumb}}" ng-click="showMemberProfile(index)" width="100%" height="100%" alt="" class="image rounded rounded-4 object-fit-cover" >
                   </div>
                   <p style="font-size: 12px; line-height: 16px; font-weight: 500" class="pt-2">
                     {{member.username}}, {{member.age}}

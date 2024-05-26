@@ -1,6 +1,6 @@
 var app = angular.module("myApp", []);
 
-app.controller('myCtrl', function($scope, $http, $window){
+app.controller('myCtrl', function($scope, $http, $timeout, $window){
     $scope.members = [];
     $scope.member  = [];
     $scope.member_index = undefined;
@@ -54,7 +54,6 @@ app.controller('myCtrl', function($scope, $http, $window){
         }).then(
             function (response) {
                 $scope.loading = false;
-                console.log(response);
                 if(response.data.status == "200") {
                     $scope.members = $scope.members.concat(response.data.data);
                     $scope.show_more = response.data.show_more;
@@ -63,9 +62,30 @@ app.controller('myCtrl', function($scope, $http, $window){
         )
     }
 
+    $scope.updateViewCount = function (id) {
+        const data = {'id' : id};
+        $http({
+            method: 'POST',
+            url: base_url+'api/update_view_count.php',
+            data: data,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+            }
+        );
+    };
+
     $scope.showMemberProfile = function (index) {
         $scope.all_images = [];
         $scope.member = $scope.members[index];
+
+        $timeout.cancel($scope.timer);
+        $scope.timer = $timeout( function () {
+            $scope.updateViewCount($scope.member.id)
+        }, 2000);
 
         $scope.member_index = index;
         

@@ -5,4 +5,6 @@
     $sha_key            = "h3cG440p";
     $thumb_width        = 150;
     $thumb_height       = 200;
+    $post_thumb_width   = 300;
+    $post_thumb_height  = 250;
 ?>

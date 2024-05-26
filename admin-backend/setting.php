@@ -267,9 +267,11 @@
                 }
             }else{
                 preview.style.display = "";
-                preview.style.width = '400px';
-                preview.innerHTML = '';
-                preview.innerHTML = `<div class="bg-danger text-white fs-3">Your uploaded file type is not accepted!</div>`;
+                preview.style.width = '300px';
+                preview.innerHTML = `
+                <h4 class="bg-danger text-white text-center py-2">Your uploaded file type is not accepted!</h4>
+                <label id="choose-file-label" onclick="browseImage()" style="margin-top: 30%; margin-left:30%; cursor: pointer; font-size: 20px;">Choose file</label>
+                `;
             };
         }
     </script>
