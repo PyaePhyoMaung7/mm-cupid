@@ -4,7 +4,7 @@ require('./site-config/config.php');
 require('./site-config/connect.php');
 require('./site-config/check_member_auth.php');
 require('./site-config/include_functions.php');
-$title = "Home | " . $site_title;
+$title = "Knowledge | " . $site_title;
 $description_content = "Myanmar Dating | Online Dating | Myanmar Cupid | MMcupid | သင့်ဖူးစာရှင်ကိုရှာဖွေလိုက်ပါ | Welcome Myanmar Cupid";
 $keywords_content = "myanrmar online dating, online dating, mmcupid, myanmar dating website, find love, find lover, dating, date partner, ဖူးစာရှာ, အချစ်ရှာ, ကောင်လေးရှာ, ကောင်မလေးရှာ";
 
@@ -37,19 +37,19 @@ require ('./templates/template_header.php')
                     <button class="round-btn btn btn-light" ng-disabled="prev_btn_disabled" id="prev-profile-btn" ng-click="showPrevPost(post_index)" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-left"></i></button>
                     <div class="d-flex">
                         <div class="round-btn me-3 btn btn-light" style="width: 60px; height: 60px;"><i class="fa fa-commenting fs-3"></i></div>
-                        <div class="round-btn ms-3 btn btn-light" style="width: 60px; height: 60px;"><i class="fa fa-heart fs-3"></i></div>
+                        <button class="round-btn ms-3 btn btn-light" ng-click="sharePost()" style="width: 60px; height: 60px;" title="Share this on facebook"><i class="fa fa-facebook fs-2"></i></button>
                     </div>
                     <button class="round-btn btn btn-light me-2" ng-disabled="next_btn_disabled" id="next-profile-btn" ng-click="showNextPost(post_index)" style="width: 35px; height: 35px;"><i class="fa fs-5 fa-chevron-right"></i></button>
                     </div>
                 </div>
 
                 <div id="post-content" class="overflow-y-auto bg-white" style="width:100%; height: 80vh; z-index: 5;">
-                    <div class="w-100" style="height: 70%;">
+                    <div class="w-100 h-100">
                         <img ng-src="{{post.image}}" class="profile-image w-100 h-100 object-fit-cover" alt="">
                     </div>
-                    <div class="p-3" style="margin-bottom: 70px;">
+                    <div class="mt-1 p-3 ps-4" style="margin-bottom: 70px;">
                         <h3 class="fw-bold my-2">{{post.title}}</h3>
-                        <p class="text-secondary fs-5">{{post.description}}</p>
+                        <p class="text-secondary mt-4 pe-3 fs-6">{{post.description}}</p>
                     </div>
                 </div>
                 </div>
@@ -97,6 +97,8 @@ require ('./templates/template_header.php')
         percent     = percent * 3/4;
         getScrollBar.style.top = `${percent}%`;
     })
+
+    
     </script>
 <?php
     require('./templates/template_html_end.php');

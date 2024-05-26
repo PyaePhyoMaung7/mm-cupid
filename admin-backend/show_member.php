@@ -33,6 +33,7 @@
                 FROM `members` 
                 JOIN `city`
                 ON members.city_id = city.id
+                ORDER BY id DESC
                 LIMIT $offset, $record_per_page";
     $result     = $mysqli->query($sql);
     $num_rows   = $result->num_rows;

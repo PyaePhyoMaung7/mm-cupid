@@ -104,7 +104,7 @@
                         <?php
                         } else {
                         ?>
-                        <a href="<?php echo $admin_base_url; ?>edit_city.php?id=<?php echo $id; ?>"><button class="btn btn-primary" type="reset">Back</button></a>
+                        <a href="<?php echo $admin_base_url; ?>show_city.php?id=<?php echo $id; ?>"><button class="btn btn-primary" type="reset">Back</button></a>
                         <?php } ?>
                     </div>
                 </div>

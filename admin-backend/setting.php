@@ -266,6 +266,7 @@
                     $('#choose-file-label').hide();
                 }
             }else{
+                $('#post-image').val('');
                 preview.style.display = "";
                 preview.style.width = '300px';
                 preview.innerHTML = `

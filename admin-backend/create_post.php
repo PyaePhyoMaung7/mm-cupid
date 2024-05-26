@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$auth_role = [1,2];
+$auth_role = [1, 2];
 require('../site-config/admin_require.php');
 
 $title              = ": Create Knowledge Post";
@@ -115,14 +115,14 @@ require('../templates/cp_template_top_nav.php');
                                 </div>
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="post-description">Post Description <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="post-description">Post description <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 ">
                                     <textarea name="post-description" id="post-description" class="form-control" placeholder="Enter Post Description" rows="12"><?php echo $post_description; ?></textarea>
                                 </div>
                             </div>
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Post Image <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">Post image <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6">
                                     <div id="preview-image" class="overflow-hidden" style="border:1px dashed grey; border-radius: 10px; width: 300px; height: 300px;">
@@ -179,6 +179,7 @@ require('../templates/cp_template_top_nav.php');
                 $('#choose-file-label').hide();
             }
         }else{
+            $('#post-image').val('');
             preview.style.display = "";
             preview.style.width = '300px';
             preview.innerHTML = `

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
     <meta name="description" content="<?php echo $description_content; ?>">
     <meta name="keywords" content="<?php echo $keywords_content; ?>">
+    <!-- <meta property="og:title" content="Aries" />
+    <meta property="og:description" content="Aries is the best zodiac sign." />
+    <meta property="og:image" content="http://localhost/mm-cupid/assets/post_images/2/202405260820326652d4b0a297f_aries.jpg" />
+    <meta property="og:url" content="http://localhost/mm-cupid/knowledge.php" />
+    <meta property="og:type" content="website" /> -->
+
     <title><?php echo $title; ?></title>
     <link
       href="<?php echo $base_url; ?>assets/front/css/bootstrap.min.css"

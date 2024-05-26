@@ -1,6 +1,6 @@
 var app = angular.module("myApp", []);
 
-app.controller('myCtrl', function($scope, $http, $window){
+app.controller('myCtrl', function($scope, $http, $timeout, $window){
     $scope.loading      = false;
     $scope.page         = 1;
     $scope.show_more    = false;
@@ -13,6 +13,8 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.init = function () {
         $scope.syncKnowledge();
     }
+
+        
 
     $scope.syncKnowledge = function () {
         $scope.loading = true;
@@ -29,9 +31,32 @@ app.controller('myCtrl', function($scope, $http, $window){
                 if(response.data.status == "200") {
                     $scope.posts = $scope.posts.concat(response.data.data);
                     $scope.show_more = response.data.show_more;
+                    $timeout(function () {
+                        $scope.clickUrlPost()
+                    }, 10);
                 }
             }
         )
+    }
+
+    $scope.clickUrlPost = function () {
+        const fragment = window.location.hash;
+        if (fragment) {
+            const id = fragment.substring(1);
+            const post_container = document.getElementById(id);
+            console.log(post_container);
+            const post = post_container.querySelector('.card');
+            post.click();
+        }
+    }
+
+    $scope.copyURL = function (id) {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url + '#' + id).then(function() {
+            alert('URL copied to clipboard!');
+        }).catch(function(error) {
+            console.error('Error copying URL to clipboard:', error);
+        });
     }
 
     $scope.loadMore = function () {
@@ -87,5 +112,10 @@ app.controller('myCtrl', function($scope, $http, $window){
             $scope.post_index = index + 1 ;
             $scope.showPostDetails($scope.post_index);
        }
+    }
+
+    $scope.sharePost = function () {
+        const id = 'post-'+$scope.post_index;
+        $scope.copyURL(id);
     }
 });
