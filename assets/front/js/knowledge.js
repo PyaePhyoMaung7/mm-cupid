@@ -1,14 +1,16 @@
 var app = angular.module("myApp", []);
 
 app.controller('myCtrl', function($scope, $http, $timeout, $window){
-    $scope.loading      = false;
-    $scope.page         = 1;
-    $scope.show_more    = false;
-    $scope.posts        = [];
-    $scope.post         = {};
-    $scope.post_index   = undefined;
-    $scope.prev_btn_disabled = true;
-    $scope.next_btn_disabled = true;
+    $scope.loading              = false;
+    $scope.page                 = 1;
+    $scope.show_more            = false;
+    $scope.posts                = [];
+    $scope.post                 = {};
+    $scope.post_index           = undefined;
+    $scope.prev_btn_disabled    = true;
+    $scope.next_btn_disabled    = true;
+    $scope.is_searched          = false;
+    $scope.search_key           = '';
 
     $scope.init = function () {
         $scope.syncKnowledge();
@@ -18,10 +20,11 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
 
     $scope.syncKnowledge = function () {
         $scope.loading = true;
+        const data = $scope.is_searched ? {'page' : $scope.page, 'key' : $scope.search_key} : {'page' : $scope.page};
         $http({
             method: 'POST',
             url: base_url+'api/sync_knowledge.php',
-            data: {'page' : $scope.page},
+            data: data,
             headers: {
               'Content-Type': 'application/json'
             }
@@ -117,5 +120,21 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
     $scope.sharePost = function () {
         const id = 'post-'+$scope.post_index;
         $scope.copyURL(id);
+    }
+    
+    $scope.searchPost = function () {
+        $scope.page = 1;
+        $scope.is_searched = true;
+        $scope.posts    = [];
+        $scope.syncKnowledge();
+        $scope.backSearchOffcanvas();
+    }
+
+    $scope.emptySearch = function () {
+        $scope.search_key = '';
+    }
+
+    $scope.backSearchOffcanvas = function () {
+        $('#offcanvas-search-btn').click();
     }
 });

@@ -14,9 +14,15 @@
         $offset         = ($pageNo - 1) * $record_per_page;
         $member_id      = $_SESSION['uid'];
         $total_show_data= $pageNo * $record_per_page;
+        $where_search   = '';
+
+        if(array_key_exists('key', $decoded_data) && $decoded_data['key'] != ''){
+            $search_key     =  $decoded_data['key'];
+            $where_search   = "(title LIKE '%" . $search_key . "%' OR description LIKE '%" . $search_key . "%') AND";
+        }
 
         $get_knowledge_sql = "SELECT id, title, description, thumbnail, image, created_at, updated_at 
-                                FROM `knowledge` WHERE deleted_at IS NULL LIMIT $offset, $record_per_page";
+                                FROM `knowledge` WHERE " . $where_search . " deleted_at IS NULL LIMIT $offset, $record_per_page";
         
         $result = $mysqli->query($get_knowledge_sql);
 
@@ -36,7 +42,7 @@
             array_push($response_data, $data);
         }
 
-        $more_knowledge_sql = "SELECT count(id) AS total FROM `knowledge` WHERE deleted_at IS NULL";
+        $more_knowledge_sql = "SELECT count(id) AS total FROM `knowledge` WHERE " . $where_search . " deleted_at IS NULL";
         $more_knowledge_res = $mysqli->query($more_knowledge_sql);
         $row2 = $more_knowledge_res->fetch_assoc();
         $total_count = $row2['total'];

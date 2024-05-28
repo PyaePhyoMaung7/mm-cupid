@@ -1,6 +1,21 @@
+<?php
+  $current_page = basename($_SERVER['REQUEST_URI'], ".php"); 
+?>
 <header class="article-container-header d-flex justify-content-between">
   <span class="article-container-title" style="font-size: 26px">
-    Home
+    <?php
+      switch ($current_page) {
+        case 'index':
+          echo 'Home';
+          break;
+        case 'knowledge':
+          echo 'Knowledge';
+          break;
+        default:
+          # code...
+          break;
+      }
+    ?>
   </span>
   <div class="d-flex justify-content-center align-items-center">
     <button class="icon-button bg-black justify-content-center me-1 d-flex align-items-center" style="height: 25px; width: 60px; border-radius: 100%/60px;">
@@ -11,25 +26,50 @@
       <i class="fa fa-search fs-4 fw-bold" id="offcanvas-search-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch"></i>
     </button>
 
-    <div style="width: 540px; height: 280px; margin: 0 auto;" class="offcanvas offcanvas-bottom rounded-top-5 p-3" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
-      <div class="offcanvas-header">
-        <button type="button" class="btn-close fs-5" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body small" style="font-size: 17px;">
+    <?php
+      if($current_page == 'index') {
+        echo '
+        <div style="width: 540px; height: 280px; margin: 0 auto;" class="offcanvas offcanvas-bottom rounded-top-5 p-3" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close fs-5" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body small" style="font-size: 17px;">
 
-        <div class="d-flex justify-content-between align-items-center mb-4" style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasGender" aria-controls="offcanvasGender">
-          <strong><span>Show me</span></strong>
-          <span>{{partner_gender_name}} <i class="fa fa-chevron-right"></i></span>
+            <div class="d-flex justify-content-between align-items-center mb-4" style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasGender" aria-controls="offcanvasGender">
+              <strong><span>Show me</span></strong>
+              <span>{{partner_gender_name}} <i class="fa fa-chevron-right"></i></span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4" style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAge" aria-controls="offcanvasAge">
+              <strong><span>Age range</span></strong>
+              <span>{{age_limit}} <i class="fa fa-chevron-right"></i></span>
+            </div>
+            <button class="btn btn-lg rounded-pill btn-dark w-100" ng-click="applyFilter()">Apply Filters</button>
+          </div>
         </div>
+        ';
+      }else if($current_page == 'knowledge') {
+        echo '
+        <div style="width: 540px; height: 290px; margin: 0 auto;" class="offcanvas offcanvas-bottom rounded-top-5 p-3" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close fs-5" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body small" style="font-size: 17px;">
 
-        <div class="d-flex justify-content-between align-items-center mb-4" style="cursor: pointer" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAge" aria-controls="offcanvasAge">
-          <strong><span>Age range</span></strong>
-          <span>{{age_limit}} <i class="fa fa-chevron-right"></i></span>
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <strong><label for="search-key">Search Knowledge Post</label></strong>
+                <span class="text-danger" ng-click="emptySearch()">clear</span>
+              </div>
+              <input id="search-key" type="text" class="form-control" ng-model="search_key" placeholder="Enter keywords to search">
+            </div>
+
+            <button class="btn btn-lg rounded-pill btn-dark w-100" ng-click="searchPost()">Search</button>
+          </div>
         </div>
-        <button class="btn btn-lg rounded-pill btn-dark w-100" ng-click="applyFilter()">Apply Filters</button>
-      </div>
-    </div>
-
+        ';
+      }
+    ?>
     <div style="width: 540px; height: 370px; margin: 0 auto;" class="offcanvas offcanvas-bottom rounded-top-5 p-3" tabindex="-1" id="offcanvasGender" aria-labelledby="offcanvasGenderLabel">
       <div class="offcanvas-header py-0">
         <span type="button" ng-click="backSearchOffcanvas()" class="fs-4 float-left" aria-label="Back"><i class="fa fa-chevron-left"></i></span>

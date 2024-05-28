@@ -25,8 +25,13 @@
                             <button class="" style="outline: none; background: transparent; border: 1px solid transparent;" type="button" >
                                 <i class="fa fa-user fs-4" id="user-profile-btn" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfile" aria-controls="offcanvasUserProfile"></i>
                             </button> 
-                            <?php require('./include_files/offcanvas_profile.php'); ?>
-                            <?php require('./include_files/offcanvas_profile_edit.php'); ?>
+                           
+                            <?php 
+                                require('./include_files/offcanvas_profile.php');
+                                require('./include_files/offcanvas_profile_edit.php');
+                                require('./include_files/offcanvas_photo_verify.php'); 
+                            ?>
+                               
                         </div>
                     </div>
                     </header>
@@ -34,10 +39,20 @@
                     <div class="container">
                         <div class="mt-1">
                             <div class="row">
-                            <div class="col-md-3 shadow" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
-                                <img ng-src="{{member.thumb}}" class="w-100 h-100 object-fit-cover"
-                                alt="Profile Photo">
+                            <div class="col-md-3 position-relative" >
+                                <div class="shadow-sm" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
+                                    <img ng-src="{{member.thumb}}" class="w-100 h-100 object-fit-cover"
+                                    alt="Profile Photo">
+                                </div>
+                                
+                                <span class="fs-5 fw-bold d-flex align-items-center position-absolute" style="bottom: 10px; right: -5px;"  ng-if="member.status == 4">
+                                    <span class="fa-stack me-2" style="font-size: 14px;">
+                                        <i class="fa fa-certificate fa-stack-2x text-primary"></i>
+                                        <i class="fa fa-check fa-stack-1x text-white"></i>
+                                    </span>
+                                </span> 
                             </div>
+
                             <div class="col-md-6">
                                 <h3 class="mt-4">{{member.username}}, {{member.age}}</h3>
                                 <button type="button" class="btn btn-outline-secondary btn-sm btn-smaller">

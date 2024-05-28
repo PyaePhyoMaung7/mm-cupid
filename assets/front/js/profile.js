@@ -10,9 +10,12 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.min_ages         = [];
     $scope.max_ages         = [];
     $scope.process_error    = false;
+    $scope.streaming        = false;
+    $scope.member_status    = undefined;
     
     $scope.init = function () {
         const data = {};
+        $scope.loading = true;
         $http({
             method: 'POST',
             url: base_url+'api/sync_login_member.php',
@@ -29,12 +32,14 @@ app.controller('myCtrl', function($scope, $http, $window){
                     $scope.getCities();
                     $scope.getHobbies();
                     $scope.bindInfo();
+                    console.log($scope.member.status);
                 }
             }
         )
     }
 
     $scope.update = function () {
+        $scope.loading = true;
         $http({
             method: 'POST',
             url: base_url+'api/update_profile.php',
@@ -44,6 +49,7 @@ app.controller('myCtrl', function($scope, $http, $window){
             }
         }).then(
             function (response) {
+                $scope.loading = false;
                 if(response.data.status = '200') {
                     $scope.init();
                     $scope.backUserProfile();
@@ -54,7 +60,12 @@ app.controller('myCtrl', function($scope, $http, $window){
 
     $scope.bindImages = function (images) {
         images.forEach(image => {
-            $('#preview'+image.sort).html(`<img src= ${image.image} class="" style="width: 100%; height: 100%; object-fit: cover" alt="Image Preview"/>`);
+            $('#preview'+image.sort).html(`
+                <img src= ${image.image} class="" style="width: 100%; height: 100%; object-fit: cover" alt="Image Preview"/>
+            `);
+            if(image.sort != 1){
+                $('#delete-btn-'+image.sort).removeClass('d-none');
+            }
             $('#upload-icon-'+image.sort).hide();
             $('.change-photo'+image.sort).show();
             $('#preview'+image.sort).removeClass('d-none');
@@ -87,6 +98,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.backUserProfile = function () {
+        $scope.stopStream($scope.stream);
         $('#user-profile-btn').click();
     }
 
@@ -282,6 +294,7 @@ app.controller('myCtrl', function($scope, $http, $window){
                     let form_data = new FormData();
                     form_data.append('file', file);
                     form_data.append('sort', i);
+                    $scope.loading = true;
                     $http({
                         method: 'POST',
                         url: url,
@@ -291,8 +304,9 @@ app.controller('myCtrl', function($scope, $http, $window){
                         }
                     }).then(
                         function (response) {
+                            // $scope.loading = false;
                             if(response.data.status == '200') {
-                                $scope.init();
+                                // $scope.init();
                             }
                         },
                         function (error) {
@@ -304,6 +318,132 @@ app.controller('myCtrl', function($scope, $http, $window){
                 }
             }
         }
+    }
+
+    $scope.deletePhoto = function (sort) {
+        $value = $('#upload'+sort).val();
+        if($value == '') {
+            $scope.loading = true;
+            $http({
+                method: 'POST',
+                url: base_url+'api/delete_photo.php',
+                data: {'sort' : sort},
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            }).then(
+                function (response) {
+                    $scope.loading = false;
+                    if(response.data.status == '200') {
+                        $scope.discardPhoto(sort);
+                    }
+                }
+            )
+        } else {
+            $scope.discardPhoto(sort);
+        }
+    }
+
+    $scope.discardPhoto = function (sort) {
+        $('#preview'+sort).html('');
+        $('#upload-icon-'+sort).show();
+        $('.change-photo'+sort).hide();
+        $('#preview'+sort).addClass('d-none');
+        $('#delete-btn-'+sort).addClass('d-none');
+    }
+
+    $scope.confirmDelete = function (sort){
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+               $scope.deletePhoto(sort);
+            }
+        });
+    }
+
+    $scope.openCamera = function () {
+        let video = document.getElementById('video');
+
+        $('#open-camera').hide();
+        $('#photo').hide();
+        $('.after-photo-taken').hide();
+        $('#video').show();
+        $('#take-photo').show();
+        
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(function(stream) {
+            $scope.stream   = stream;
+            video.srcObject = stream;
+            video.play();
+            $scope.streaming = true;
+        })
+        .catch(function(err) {
+            console.log("An error occurred: " + err);
+        });
+    }
+
+    $scope.takePhoto = function () {
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let photo = document.getElementById('photo');
+
+        $('#take-photo').hide();
+        $('#photo').show();
+        $('.after-photo-taken').show();
+        $('#photo').show();
+        $('#video').hide();
+
+        if (!$scope.streaming) {
+            console.error('Camera not opened yet!');
+            return;
+        }
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        photo.src = canvas.toDataURL('image/png');
+        $scope.stopStream($scope.stream);
+    }
+
+    $scope.resetPhoto = function () {
+        $('#photo').attr('src', '');
+        $scope.openCamera();
+    }
+
+    $scope.stopStream = function (stream) {
+        if (stream) {
+          let tracks = stream.getTracks();
+      
+          tracks.forEach((track) => {
+            track.stop();
+          });
+        }
+    }
+
+    $scope.sendPhoto = function () {
+        const image_src = $('#photo').attr('src');
+        const data      = {'src' : image_src};
+        $scope.loading = true;
+        $http({
+            method: 'POST',
+            url: base_url+'api/send_photo_verify.php',
+            data: data,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                $scope.loading = false;
+                $scope.backUserProfile();
+            }
+        );
     }
     
 });

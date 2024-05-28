@@ -18,6 +18,7 @@
                             <div id="preview2" class="d-none w-100 h-100"></div>
                             <label for="" onclick="browseImage('2')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo2" style="opacity: 0.6" >Change</label>
                             <i class="fa fa-upload fs-4" onclick="browseImage('2')" style="cursor: pointer" id="upload-icon-2"></i>
+                            <button id="delete-btn-2" type="button" class="btn text-decoration-none position-absolute top-0 rounded p-1 m-1 d-none" style="right: 0; outline: none; border: 1px solid transparent;" ng-click="confirmDelete(2)"><i class="fa fa-times fs-5 bg-light rounded-1 shadow"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -27,6 +28,7 @@
                             <div id="preview3" class="d-none w-100 h-100"></div>
                             <label for="" onclick="browseImage('3')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo3" style="opacity: 0.6" >Change</label>
                             <i class="fa fa-upload fs-4" onclick="browseImage('3')" style="cursor: pointer" id="upload-icon-3"></i>
+                            <button id="delete-btn-3" type="button" class="btn text-decoration-none position-absolute top-0 rounded p-1 m-1 d-none" style="right: 0; outline: none; border: 1px solid transparent;" ng-click="confirmDelete(3)"><i class="fa fa-times fs-5 bg-light rounded-1 shadow"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -36,6 +38,7 @@
                             <div id="preview4" class="d-none w-100 h-100"></div>
                             <label for="" onclick="browseImage('4')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo4" style="opacity: 0.6" >Change</label>
                             <i class="fa fa-upload fs-4" onclick="browseImage('4')" style="cursor: pointer" id="upload-icon-4"></i>
+                            <button id="delete-btn-4" type="button" class="btn text-decoration-none position-absolute top-0 rounded p-1 m-1 d-none" style="right: 0; outline: none; border: 1px solid transparent;" ng-click="confirmDelete(4)"><i class="fa fa-times fs-5 bg-light rounded-1 shadow"></i></button>                       
                         </div>
                     </td>
                     <td class="">
@@ -43,6 +46,7 @@
                             <div id="preview5" class="d-none w-100 h-100"></div>
                             <label for="" onclick="browseImage('5')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo5" style="opacity: 0.6" >Change</label>
                             <i class="fa fa-upload fs-4" onclick="browseImage('5')" style="cursor: pointer" id="upload-icon-5"></i>
+                            <button id="delete-btn-5" type="button" class="btn text-decoration-none position-absolute top-0 rounded p-1 m-1 d-none" style="right: 0; outline: none; border: 1px solid transparent;" ng-click="confirmDelete(5)"><i class="fa fa-times fs-5 bg-light rounded-1 shadow"></i></button>
                         </div>
                     </td>
                     <td class="">
@@ -50,6 +54,7 @@
                             <div id="preview6" class="d-none w-100 h-100"></div>
                             <label for="" onclick="browseImage('6')" class="btn btn-dark p-2 rounded-3 position-absolute hide change-photo change-photo6" style="opacity: 0.6" >Change</label>
                             <i class="fa fa-upload fs-4" onclick="browseImage('6')" style="cursor: pointer" id="upload-icon-6"></i>
+                            <button id="delete-btn-6" type="button" class="btn text-decoration-none position-absolute top-0 rounded p-1 m-1 d-none" style="right: 0; outline: none; border: 1px solid transparent;" ng-click="confirmDelete(6)"><i class="fa fa-times fs-5 bg-light rounded-1 shadow"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -117,9 +122,44 @@
             </div>
 
             <div class="p-3 rounded-4 bg-body-tertiary mb-2">
-                <div class="fs-5 fw-bold mb-2">Get verified</div>
-                <div class="mb-3">Verification ups your chances by showing people they can trust you</div>
-                <button class="btn btn-dark w-100 fs-5 rounded-pill"><i class="fa fa-check-circle"></i> Verify By Photo</button>
+                <?php
+                if($_SESSION['status'] == 1) {
+                ?>
+                    <div class="fs-5 fw-bold mb-2">Get verified</div>
+                    <div class="mb-3">Verification ups your chances by showing people they can trust you</div>
+                    <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserPhotoVerify" aria-controls="offcanvasUserPhotoVerify"><i class="fa fa-check-circle"></i> Verify By Photo</button>
+                <?php
+                }
+                ?>
+
+                <?php
+                if($_SESSION['status'] == 2) {
+                ?>
+                    <div class="fs-5 fw-bold mb-2">Verification Pending <i class="fa fa-circle text-warning" style="font-size: 20px;"></i></div>
+                    <div class="mb-3">Admins are checking your photo</div>
+                <?php
+                }
+                ?>
+
+                <?php
+                if($_SESSION['status'] == 3) {
+                ?>
+                    <div class="fs-5 fw-bold mb-2">Verification Denied <i class="fa fa-circle text-danger" style="font-size: 20px;"></i></div>
+                    <div class="mb-3">Sorry, we cannot verify you. Please take photo again.</div>
+                    <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserPhotoVerify" aria-controls="offcanvasUserPhotoVerify"><i class="fa fa-check-circle"></i> Verify By Photo</button>
+                <?php
+                }
+                ?>
+
+                <?php
+                if($_SESSION['status'] == 4) {
+                ?>
+                    <div class="fs-5 fw-bold mb-2">Verification Approved <i class="fa fa-circle text-success" style="font-size: 20px;"></i></div>
+                    <div class="mb-3">You are now a verified user</div>
+                <?php
+                }
+                ?>
+                
             </div>
         </div>
     </div>
@@ -145,13 +185,16 @@
                 let reader = new FileReader();
                 reader.onload = function(event) {
                 let imgSrc = event.target.result;
-                preview.innerHTML = `<img src= ${imgSrc} class="" style="width: 100%; height: 100%; object-fit: cover" alt="Image Preview"/>`;
+                preview.innerHTML = `
+                <img src= ${imgSrc} class="" style="width: 100%; height: 100%; object-fit: cover" alt="Image Preview"/>
+                `;
                 };
                 reader.readAsDataURL(file);
                 preview.style.display = "";
                 $('#upload-icon-'+index).hide();
                 $('.change-photo'+index).show();
                 $('#preview'+index).removeClass('d-none');
+                $('#delete-btn-'+index).removeClass('d-none');
                 $('#update-photo-btn').prop('disabled', false);
             }
         }else{
@@ -160,22 +203,11 @@
             $('.change-photo'+index).hide();
             $('#upload-icon-'+index).show();
             $('#preview'+index).addClass('d-none');
+            $('#delete-btn-'+index).addClass('d-none');
 
             alert('Your uploaded file type is not accepted.');
         };
 
-        // let upload1_value = document.getElementById('upload1').value;
-        // let upload2_value = document.getElementById('upload2').value;
-        // let upload3_value = document.getElementById('upload3').value;
-        // let upload4_value = document.getElementById('upload4').value;
-        // let upload5_value = document.getElementById('upload5').value;
-        // let upload6_value = document.getElementById('upload6').value;
-
-        // if(upload1_value != "" || upload2_value != "" || upload3_value != "" || upload4_value != "" || upload5_value != "" || upload6_value != ""){
-        //     $('#register-btn').prop('disabled', false);
-        // }else{
-        //     $('#register-btn').prop('disabled', true);
-        // }
     }
 
     const offcanvas_body = document.querySelector('.offcanvas-body')

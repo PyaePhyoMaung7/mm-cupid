@@ -35,7 +35,7 @@
                 if($status == 0){
                     $error = true;
                     $error_message = "Your account has not been activated yet. Please check your email and verfiy your email address.";
-                }else if($status == 3){
+                }else if($status == 5){
                     $error = true;
                     $error_message = "Your account has been banned.";
                 }else{

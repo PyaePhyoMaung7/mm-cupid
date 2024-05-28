@@ -1,5 +1,5 @@
 <?php
-    $error = false;
+$error = false;
 ?>
 <div class="offcanvas offcanvas-end position-absolute right-0" style="width: 650px;" data-bs-backdrop="false" tabindex="-1" id="offcanvasUserProfileEdit" aria-labelledby="offcanvasUserProfileEdit">
     <div class="offcanvas-header position-sticky bg-white py-2 top-0 z-3 px-4 d-flex justify-content-between align-items-center fw-bold" style="font-size: 17px;">
@@ -12,22 +12,6 @@
                     <label for="username">Username</label>
                     <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter User Name" name="username" id="username" ng-model="member_edit.username" ng-change="validate()"/>
                     <p class="text-danger" ng-if="username_error">{{username_error_msg}}</p>
-                    
-                    <!-- <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Email" name="email" id="email" ng-model="email" ng-blur="validate('email')"  ng-change="checkValidation('email');"/>
-                    <p class="text-danger" ng-if="email_error">{{email_error_msg}}</p>
-                    
-                    <div class="position-relative">
-                        <input type="password" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Password" name="password" id="password" ng-model="password" ng-blur="validate('password')"  ng-change="checkValidation('password');"/>
-                        <i class="fa fa-eye-slash position-absolute top-0 end-0 mt-3 me-3 fs-5" id="password-icon" ng-mousedown="openPassword('password')" ng-mouseup="closePassword('password')"></i>
-                        <p class="text-danger" ng-if="password_error">{{password_error_msg}}</p>
-                    </div>
-                    
-                    <div class="position-relative">
-                        <input type="password" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Confirm Password" name="confirm-password" id="confirm-password" ng-model="confirm_password" ng-blur="validate('confirm_password')" ng-change="checkValidation('confirm_password');"/>
-                        <i class="fa fa-eye-slash position-absolute top-0 end-0 mt-3 me-3 fs-5" id="confirm-password-icon" ng-mousedown="openPassword('confirm-password')" ng-mouseup="closePassword('confirm-password')"></i>
-                        <p class="text-danger" ng-if="confirm_password_error">{{confirm_password_error_msg}}</p>
-                        <p class="text-danger" ng-if="passwords_unmatch_error">{{passwords_unmatch_error_msg}}</p>
-                    </div> -->
                     
                     <label for="phone">Phone</label>
                     <input type="text" class="form-control form-control-lg border border-1 border-black rounded rounded-4 mt-2" style="width:100%;" placeholder="Enter Phone" name="phone" id="phone" ng-model="member_edit.phone" ng-change="validate()"/>
@@ -165,15 +149,15 @@
                 </div>
 
                 <div>
-                    <?php 
-                        if($error){
-                    ?>
+                    <?php
+                        if ($error) {
+                            ?>
                         <p class="bg-danger text-white">
                             <?php echo $error_message; ?>
                         </p>
                     <?php
                         }
-                    ?>
+?>
                     <button type="button" ng-click="update()" id="update-btn" class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
                         Update
                     </button>

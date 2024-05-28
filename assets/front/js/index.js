@@ -280,7 +280,6 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
         $scope.page = 1;
         $scope.is_filtered = true;
         $scope.members = [];
-        $scope.loading = true;
         $scope.syncMember();
         $scope.backSearchOffcanvas();
     }

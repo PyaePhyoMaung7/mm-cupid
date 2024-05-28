@@ -58,8 +58,9 @@
         $data['partner_min_age']= (int) $row['partner_min_age'];
         $data['partner_max_age']= (int) $row['partner_max_age'];
         $data['work']           = htmlspecialchars($row['work']);
+        $data['status']         = (int) $row['status'];
         
-        $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$member_id'";
+        $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$member_id' AND deleted_at IS NULL";
         $gallery_res = $mysqli->query($gallery_sql);
         $images = [];
         $photo  = [];

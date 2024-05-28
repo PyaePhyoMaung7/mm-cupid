@@ -27,7 +27,14 @@
 
             if(move_uploaded_file($file['tmp_name'], $destination)) {
 
-                $old_photo_sql  = "SELECT name FROM `member_gallery` WHERE member_id = '$member_id' AND sort = '$sort'";
+                $old_photo_sql  = "SELECT T01.name, T02.thumbnail 
+                                    FROM `member_gallery` AS T01
+                                    JOIN `members` AS T02
+                                    ON T01.member_id = T02.id
+                                    WHERE T01.member_id = '$member_id' 
+                                    AND sort = '$sort' 
+                                    AND T01.deleted_at IS NULL";
+
                 $old_photo_res  = $mysqli->query($old_photo_sql);
 
                 if($old_photo_res->num_rows <= 0) {
@@ -35,8 +42,12 @@
                                         (member_id, name, sort, created_at, created_by, updated_at, updated_by)
                                         VALUES ('$member_id', '$unique_file_name', '$sort', '$today_dt', '$member_id', '$today_dt', '$member_id')";
                 } else {
-                    $old_photo_name = $old_photo_res->fetch_assoc()['name'];
-                    unlink($upload_dir . $old_photo_name);
+                    $old_photo = $old_photo_res->fetch_assoc();
+                    $old_photo_name = $old_photo['name'];
+                    $old_photo_path = $upload_dir . $old_photo_name;
+                    if(file_exists($old_photo_path)){
+                        unlink($old_photo_path);
+                    }
 
                     if($sort == 1){
                         $thumb_upload_dir = $dir . '/' . $member_id . '/thumb/';
@@ -47,10 +58,12 @@
                         $thumb_destination = $thumb_upload_dir . $unique_thumb_name;
                         cropAndResizeImage($destination, $thumb_destination, $thumb_width, $thumb_height);
                         
-                        $old_thumb_sql  = "SELECT thumbnail FROM `members` WHERE id = '$member_id'";
-                        $old_thumb_res  = $mysqli->query($old_thumb_sql);
-                        $old_thumb_name = $old_thumb_res->fetch_assoc()['thumbnail'];
-                        unlink($thumb_upload_dir . $old_thumb_name);
+                        $old_thumb_name = $old_photo['thumbnail'];
+                        $old_thumb_path = $thumb_upload_dir . $old_thumb_name;
+
+                        if(file_exists($old_thumb_path)) {
+                            unlink($old_thumb_path);
+                        }
 
                         $new_thumb_sql  = "UPDATE `members` 
                                             SET thumbnail   = '$unique_thumb_name',

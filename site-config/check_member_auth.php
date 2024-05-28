@@ -19,7 +19,7 @@
             exit();
         }else{
             $user = $result->fetch_assoc();
-            if($user['status'] == 0 || $user['status'] == 3){
+            if($user['status'] == 0 || $user['status'] == 5){
                 $url= $admin_base_url.'logout';
                 header('Refresh:0; url='.$url);
                 exit();

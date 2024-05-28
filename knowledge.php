@@ -62,8 +62,19 @@ require ('./templates/template_header.php')
                 <section class="article-container-body rtf">
                     <div class="container" id="knowledge-content" style="z-index: 10; min-height: 500px;">
                         <div class="row g-3 my-2">
-                            <div class="col-6" id="post-{{index}}" ng-repeat="(index, post) in posts">
-                                <div class="card rounded-4 overflow-hidden shadow-sm" style="cursor: pointer" ng-click="showPostDetails(index)" >
+                            <div class="col-12" id="post-{{index}}" ng-repeat="(index, post) in posts">
+                                <div class="row rounded-4 bg-secondary-subtle overflow-hidden d-flex justify-content-between align-items-center" style="cursor: pointer" ng-click="showPostDetails(index)" style="height: 200px;">
+                                    <div class="col-4 p-0 h-100" style="">
+                                        <img class="w-100 h-100 object-fit-cover" ng-src="{{post.thumb}}" alt="" class="image" >
+                                    </div>
+                                    <div class="col-7 offset-1 h-100 py-3">
+                                        <h5 class="">{{post.title}}</h5>
+                                        <p style="font-size: 12px; line-height: 16px; font-weight: 500" class="pt-2">
+                                            {{ post.description.substring(0, 100)+ ' ...' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- <div class="card rounded-4 overflow-hidden shadow-sm" style="cursor: pointer" ng-click="showPostDetails(index)" >
                                     <img ng-src="{{post.thumb}}" alt="" class="image card-img-top" >
                                     <div class="card-body">
                                         <h5 class="card-title">{{post.title}}</h5>
@@ -71,7 +82,7 @@ require ('./templates/template_header.php')
                                             {{ post.description.substring(0, 100)+ ' ...' }}
                                         </p>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="text-center my-3" ng-if="show_more">
