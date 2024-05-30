@@ -8,4 +8,7 @@ var error_messages = {
     'A0007' : 'Password must contain at least 1 capital letter, 1 small letter, 1 number and 1 special character.',
     'A0008' : 'Email already exist.',
     'A0009' : 'Incorrect date format. The format should be YYYY-MM-DD.',
+    'A0010' : 'Insufficient points. Please buy points at your profile.',
+    'A0011' : 'Your date request is pending.',
+    'A0012' : 'Your date request has already been rejected.',
 }

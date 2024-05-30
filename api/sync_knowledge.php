@@ -10,7 +10,7 @@
         $request_data   = file_get_contents('php://input');
         $decoded_data   = json_decode($request_data,true);
         $pageNo         = $decoded_data['page'];
-        $record_per_page= 6;
+        $record_per_page= 5;
         $offset         = ($pageNo - 1) * $record_per_page;
         $member_id      = $_SESSION['uid'];
         $total_show_data= $pageNo * $record_per_page;

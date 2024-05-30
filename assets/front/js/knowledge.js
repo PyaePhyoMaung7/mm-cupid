@@ -19,7 +19,7 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
         
 
     $scope.syncKnowledge = function () {
-        $scope.loading = true;
+        $('.loading').show();
         const data = $scope.is_searched ? {'page' : $scope.page, 'key' : $scope.search_key} : {'page' : $scope.page};
         $http({
             method: 'POST',
@@ -30,13 +30,13 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
             }
         }).then(
             function (response) {
-                $scope.loading = false;
                 if(response.data.status == "200") {
                     $scope.posts = $scope.posts.concat(response.data.data);
                     $scope.show_more = response.data.show_more;
-                    $timeout(function () {
-                        $scope.clickUrlPost()
-                    }, 10);
+                    // $timeout(function () {
+                    //     $scope.clickUrlPost()
+                    // }, 10);
+                    $('.loading').hide();
                 }
             }
         )
@@ -83,7 +83,7 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
             $scope.next_btn_disabled = false;
         }
 
-        $('#knowledge-content').scrollTop(0);
+        $('#post-content').scrollTop(0);
         $("#knowledge-content").css("z-index", 5);
         $('#post-details').removeClass('opacity-0');
         $("#post-details").css({
@@ -128,6 +128,12 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
         $scope.posts    = [];
         $scope.syncKnowledge();
         $scope.backSearchOffcanvas();
+    }
+
+    $scope.checkEnter = function (event) {
+        if (event.which === 13) {
+            $scope.searchPost();
+        }
     }
 
     $scope.emptySearch = function () {

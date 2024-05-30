@@ -95,7 +95,7 @@
                                 $thumb_url          = $base_url . 'assets/uploads/' . $id . '/thumb/' . $thumb;
                                 $city_name          = htmlspecialchars($row['city_name']);
                                 $status             = htmlspecialchars($row['status']);
-                                $delete_url         = $admin_base_url . 'delete_member.php?id=' . $id;
+                                $ban_url            = $admin_base_url . 'ban_member.php?id=' . $id;
                                 $confirm_url        = $admin_base_url . 'confirm_member.php?id=' . $id;
                                 $view_url           = $admin_base_url . 'member_details.php?id=' . $id;
                                 $point_url          = $admin_base_url . 'manage_point.php?id=' . $id;
@@ -117,26 +117,34 @@
                                     <?php 
                                     if($status == 0) {
                                     ?>
-                                        <span class="badge badge-warning" >unverified</span>
+                                        <span class="badge badge-secondary" >unverified</span>
                                     <?php
                                     }else if($status == 1) {
                                     ?>
-                                        <span class="badge badge-info" >email verified</span>
-                                    <?php  
+                                        <span class="badge badge-info">email verified</span>
+                                    <?php
                                     }else if($status == 2) {
                                     ?>
-                                        <span class="badge badge-success">admin verified</span>
-                                    <?php 
+                                        <span class="badge badge-warning" >pending</span>
+                                    <?php
                                     }else if($status == 3) {
+                                    ?>
+                                        <span class="badge badge-dark" >declined</span>
+                                    <?php  
+                                    }else if($status == 4) {
+                                    ?>
+                                        <span class="badge badge-success">verified</span>
+                                    <?php 
+                                    }else if($status == 5) {
                                     ?>
                                         <span class="badge badge-danger">banned</span>
                                     <?php 
                                     }
                                     ?>
                                 </td>
-                                <td class="">
-                                    <a href="<?php echo $delete_url; ?>" ><button type="button" class="btn btn-danger py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-trash"></i> <span>Delete</span> </button></a>
-                                    <a href="<?php echo $confirm_url; ?>" ><button type="button" class="btn btn-success py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-check"></i> <span>Confirm</span></button></a>
+                                <td class="align-middle">
+                                    <a href="javascript:void(0)" onclick="confirmBan('<?php echo $ban_url; ?>')" ><button type="button" class="btn btn-danger py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-trash"></i> <span>Ban</span> </button></a>
+                                    <!-- <a href="<?php echo $confirm_url; ?>" ><button type="button" class="btn btn-success py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-check"></i> <span>Confirm</span></button></a> -->
                                     <a href="<?php echo $view_url; ?>" ><button type="button" class="btn btn-dark py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-eye"></i> <span>View</span></button></a>
                                     <a href="<?php echo $point_url; ?>" ><button type="button" class="btn btn-primary py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-diamond"></i> <span>Point</span></button></a>
                                 </td>
@@ -172,15 +180,15 @@
 ?>
 <!-- Custom javascript code goes here -->
 <script>
-    function confirmDelete(url){
+    function confirmBan(url){
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Ban confirmation?",
+            text: "Are you sure to ban this member!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, Ban him!"
             }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = url;

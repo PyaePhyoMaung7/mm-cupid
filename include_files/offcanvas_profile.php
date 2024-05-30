@@ -122,44 +122,27 @@
             </div>
 
             <div class="p-3 rounded-4 bg-body-tertiary mb-2">
-                <?php
-                if($_SESSION['status'] == 1) {
-                ?>
+                <div ng-if="member.status == 1">
                     <div class="fs-5 fw-bold mb-2">Get verified</div>
                     <div class="mb-3">Verification ups your chances by showing people they can trust you</div>
                     <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserPhotoVerify" aria-controls="offcanvasUserPhotoVerify"><i class="fa fa-check-circle"></i> Verify By Photo</button>
-                <?php
-                }
-                ?>
-
-                <?php
-                if($_SESSION['status'] == 2) {
-                ?>
+                </div>
+                    
+                <div ng-if="member.status == 2">
                     <div class="fs-5 fw-bold mb-2">Verification Pending <i class="fa fa-circle text-warning" style="font-size: 20px;"></i></div>
-                    <div class="mb-3">Admins are checking your photo</div>
-                <?php
-                }
-                ?>
-
-                <?php
-                if($_SESSION['status'] == 3) {
-                ?>
+                    <div class="mb-3">Admins are checking your photo. Please wait patiently.</div>
+                </div>
+                
+                <div ng-if="member.status == 3">
                     <div class="fs-5 fw-bold mb-2">Verification Denied <i class="fa fa-circle text-danger" style="font-size: 20px;"></i></div>
                     <div class="mb-3">Sorry, we cannot verify you. Please take photo again.</div>
                     <button class="btn btn-dark w-100 fs-5 rounded-pill" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserPhotoVerify" aria-controls="offcanvasUserPhotoVerify"><i class="fa fa-check-circle"></i> Verify By Photo</button>
-                <?php
-                }
-                ?>
-
-                <?php
-                if($_SESSION['status'] == 4) {
-                ?>
+                </div>
+                
+                <div ng-if="member.status == 4">
                     <div class="fs-5 fw-bold mb-2">Verification Approved <i class="fa fa-circle text-success" style="font-size: 20px;"></i></div>
                     <div class="mb-3">You are now a verified user</div>
-                <?php
-                }
-                ?>
-                
+                </div>
             </div>
         </div>
     </div>

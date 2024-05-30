@@ -7,4 +7,5 @@
     $thumb_height       = 200;
     $post_thumb_width   = 300;
     $post_thumb_height  = 250;
+    $invitation_point   = 300;
 ?>

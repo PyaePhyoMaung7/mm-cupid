@@ -12,10 +12,13 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.process_error    = false;
     $scope.streaming        = false;
     $scope.member_status    = undefined;
+    $scope.inviters         = [];
+    $scope.all_images       = [];
+    $scope.image_arr        = [];
     
     $scope.init = function () {
         const data = {};
-        $scope.loading = true;
+        $('.loading').show();
         $http({
             method: 'POST',
             url: base_url+'api/sync_login_member.php',
@@ -25,21 +28,21 @@ app.controller('myCtrl', function($scope, $http, $window){
             }
         }).then(
             function (response) {
-                $scope.loading = false;
                 if(response.data.status == "200") {
                     $scope.member       = response.data.data;
+                    $scope.inviters     = response.data.data.inviters;
                     $scope.bindImages($scope.member.images);
                     $scope.getCities();
                     $scope.getHobbies();
                     $scope.bindInfo();
-                    console.log($scope.member.status);
+                    $('.loading').hide();
                 }
             }
         )
     }
 
     $scope.update = function () {
-        $scope.loading = true;
+        $('.loading').show();
         $http({
             method: 'POST',
             url: base_url+'api/update_profile.php',
@@ -49,10 +52,10 @@ app.controller('myCtrl', function($scope, $http, $window){
             }
         }).then(
             function (response) {
-                $scope.loading = false;
                 if(response.data.status = '200') {
                     $scope.init();
                     $scope.backUserProfile();
+                    $('.loading').hide();
                 }
             }
         );
@@ -100,6 +103,9 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.backUserProfile = function () {
         $scope.stopStream($scope.stream);
         $('#user-profile-btn').click();
+        $('#video').hide();
+        $('#take-photo').hide();
+        $('#open-camera').show();
     }
 
     $scope.getCities = function () {
@@ -274,13 +280,14 @@ app.controller('myCtrl', function($scope, $http, $window){
         }
 
         if($scope.process_error){
-            $('#update-btn').prop('disabled',true);
+            $('#update-details-btn').prop('disabled',true);
         }else{
-            $('#update-btn').prop('disabled',false);
+            $('#update-details-btn').prop('disabled',false);
         }
     }
 
     $scope.updatePhoto = function () {
+        $('.loading').show();
         const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif'];
         for (let i = 1; i <= 6; i++) {
             const input = $('#upload'+i)[0];
@@ -294,7 +301,6 @@ app.controller('myCtrl', function($scope, $http, $window){
                     let form_data = new FormData();
                     form_data.append('file', file);
                     form_data.append('sort', i);
-                    $scope.loading = true;
                     $http({
                         method: 'POST',
                         url: url,
@@ -304,9 +310,8 @@ app.controller('myCtrl', function($scope, $http, $window){
                         }
                     }).then(
                         function (response) {
-                            // $scope.loading = false;
                             if(response.data.status == '200') {
-                                // $scope.init();
+                                $scope.init();
                             }
                         },
                         function (error) {
@@ -318,12 +323,13 @@ app.controller('myCtrl', function($scope, $http, $window){
                 }
             }
         }
+        $('.loading').hide();
     }
 
     $scope.deletePhoto = function (sort) {
         $value = $('#upload'+sort).val();
         if($value == '') {
-            $scope.loading = true;
+            $('.loading').show();
             $http({
                 method: 'POST',
                 url: base_url+'api/delete_photo.php',
@@ -333,9 +339,9 @@ app.controller('myCtrl', function($scope, $http, $window){
                 }
             }).then(
                 function (response) {
-                    $scope.loading = false;
                     if(response.data.status == '200') {
                         $scope.discardPhoto(sort);
+                        $('.loading').hide();
                     }
                 }
             )
@@ -345,6 +351,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     }
 
     $scope.discardPhoto = function (sort) {
+        $('#upload'+sort).val('');
         $('#preview'+sort).html('');
         $('#upload-icon-'+sort).show();
         $('.change-photo'+sort).hide();
@@ -430,7 +437,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.sendPhoto = function () {
         const image_src = $('#photo').attr('src');
         const data      = {'src' : image_src};
-        $scope.loading = true;
+        $('.loading').show();
         $http({
             method: 'POST',
             url: base_url+'api/send_photo_verify.php',
@@ -440,8 +447,59 @@ app.controller('myCtrl', function($scope, $http, $window){
             }
         }).then(
             function (response) {
-                $scope.loading = false;
+                $scope.member.status = Number(response.data.ustatus);
                 $scope.backUserProfile();
+                $('.loading').hide();
+            }
+        );
+    }
+
+    $scope.showInviterProfile = function (index) {
+        $scope.all_images = [];
+        $scope.inviter = $scope.inviters[index];
+
+        if($scope.inviter.images.length <= 0) {
+            let image = {};
+            image.sort  = 1;
+            image.image = $scope.inviter.gender == 'male' ? base_url + 'assets/default_images/default_male.jpg' : base_url + 'assets/default_images/default_female.webp';
+            $scope.image_arr = [image];
+        }else{
+            $scope.image_arr = $scope.inviter.images;
+        }
+        $scope.first_name = $scope.inviter.username.split(' ')[0];
+
+        $scope.all_images = [];
+        for (let i = 0; i < $scope.image_arr.length; i++) {
+            $scope.all_images.push($scope.image_arr[i].image);
+        }
+
+        $('#profile-content').scrollTop(0);
+        $("#image-content").css("z-index", 5);
+        $('#member-profile').removeClass('opacity-0');
+        $("#member-profile").css({
+            "z-index": 10,
+            "background-color": "rgba(0, 0, 0, 0.5)"
+        });
+        $(".carousel-inner").html("");
+        
+    }
+
+    $scope.dateRequestAction = function (id, status) {
+        const data = {'id' : id, 'status' : status};
+        $('.loading').show();
+        $http({
+            method: 'POST',
+            url: base_url+'api/update_date_request.php',
+            data: data,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                if(response.data.status == '200') {
+                    $('.loading').hide();
+                }
+                console.log(response);
             }
         );
     }

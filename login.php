@@ -3,6 +3,8 @@
     require('./site-config/config.php');
     require('./site-config/connect.php');
     require('./site-config/include_functions.php');
+    require('./site-config/redirect_loggedin_member.php');
+
     $description_content = "Myanmar Dating, Online Dating, Myanmar Cupid, MMcupid, သင့်ဖူးစာရှင်ကိုရှာဖွေလိုက်ပါ";
     $keywords_content = "mmcupid | MMcupid | find love | find lover | dating | date partner | ဖူးစာရှာ | အချစ်ရှာ | ကောင်လေးရှာ | ကောင်မလေးရှာ";
     

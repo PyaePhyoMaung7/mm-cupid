@@ -11,7 +11,6 @@
     require('./templates/template_header.php');
 ?>
     <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
-        <div class="loading" ng-if="loading">Loading&#8230;</div>
         <div class="content">
             <div class="article">
                 <article class="article-container position-relative">
@@ -20,7 +19,10 @@
                         Profile
                     </span>
                     <div class="justify-content-center">
-                        <div class="flex" style="font-size: 20px;">
+                        <div class="flex align-items-center" style="font-size: 20px;">
+                            <a href="javascript:void(0)" title="log out"  onclick="confirmLogout('<?php echo $base_url; ?>logout')" class="me-1" style="outline: none; background: transparent; border: 1px solid transparent;" type="button" >
+                                <i class="fa fa-sign-out fs-4"></i>
+                            </a>
                             <i class="fa fa-cog fs-4" style="margin-right: 7px;"></i>
                             <button class="" style="outline: none; background: transparent; border: 1px solid transparent;" type="button" >
                                 <i class="fa fa-user fs-4" id="user-profile-btn" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasUserProfile" aria-controls="offcanvasUserProfile"></i>
@@ -39,18 +41,19 @@
                     <div class="container">
                         <div class="mt-1">
                             <div class="row">
-                            <div class="col-md-3 position-relative" >
-                                <div class="shadow-sm" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
-                                    <img ng-src="{{member.thumb}}" class="w-100 h-100 object-fit-cover"
-                                    alt="Profile Photo">
+                            <div class="col-3" >
+                                <div class="position-relative" style="width: 120px; height: 120px;">
+                                    <div class="shadow-sm overflow-hidden w-100 h-100 rounded-circle" >
+                                        <img ng-src="{{member.thumb}}" class="w-100 h-100 object-fit-cover"
+                                        alt="Profile Photo">
+                                    </div>
+                                    <span class="fs-5 fw-bold d-flex align-items-center position-absolute z-3" style="bottom: 10px; right: -5px;"  ng-if="member.status == 4">
+                                        <span class="fa-stack me-2" style="font-size: 14px;">
+                                            <i class="fa fa-certificate fa-stack-2x text-primary"></i>
+                                            <i class="fa fa-check fa-stack-1x text-white"></i>
+                                        </span>
+                                    </span> 
                                 </div>
-                                
-                                <span class="fs-5 fw-bold d-flex align-items-center position-absolute" style="bottom: 10px; right: -5px;"  ng-if="member.status == 4">
-                                    <span class="fa-stack me-2" style="font-size: 14px;">
-                                        <i class="fa fa-certificate fa-stack-2x text-primary"></i>
-                                        <i class="fa fa-check fa-stack-1x text-white"></i>
-                                    </span>
-                                </span> 
                             </div>
 
                             <div class="col-md-6">
@@ -121,8 +124,6 @@
                                 <p style="font-size: smaller; margin-left: 100px;">*Based on top 10% of 2.7m users sample</p>
                             </div>
                             </div>
-
-                            
                         </div>
                     </div>
                     
@@ -130,117 +131,28 @@
                         <div class="mt-1">
                             <table class="table">
                                 <thead>
-                                <tr>
-                                    
-                                    <th scope="col" style="width: 300px;">What's included?</th>
-                                    <th scope="col" style="width: 50px; text-align: center;"> Premium</th>
-                                    <th scope="col" style="width: 50px; text-align: center;">Plus</th>
-                                </tr>
+                                    <tr>
+                                        <th scope="col-9" style="">Username</th>
+                                        <th scope="col" style=" text-center">View</th>
+                                        <th scope="col" style="">Accept</th>
+                                        <th scope="col" style="">Reject</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>heart1.png">
-                                    See Who liked you
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-                                
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 35px; height: 35px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>bolt.png">
-                                    1 Extra Show Each Week
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>crush.png">
-                                    1 Crush Per Day 
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>checked.png">
-                                    Read receipts on all your chats
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>up.png">
-                                    Prioritize your sent messages
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>copy1.png">
-                                    Never run out of likes
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>undo.png">
-                                    Undo accidental left swipes
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>filter.png">
-                                    Get unlimited filters
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>user.png">
-                                    Browse profiles privately
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
-                                <tr>
-                                    <td scope="row">
-                                    <img style="width: 25px; height: 25px; margin-right: 5px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>close.png">
-                                    Remove ads
-                                    </td> 
-                                    <td> <img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    <td><img style="width: 20px; height: 20px; margin-left: 20px;" src="<?php echo $base_url . 'assets/front/images/' ; ?>tick.png"></td>
-                                    
-                                </tr>
-
+                                    <tr ng-repeat="(index, inviter) in inviters">
+                                        <td scope="" class="col-9">
+                                            <strong>{{inviter.username.split(' ')[0]}}</strong>
+                                        </td> 
+                                        <td class="">
+                                            <div class="round-btn shadow-sm ms-3 btn btn-light" ng-click="showInviterProfile(index)" title="view date inviter" style="width: 30px; height: 30px; margin: 0 auto !important;"><i class="fa fa-eye fs-6"></i></div>
+                                        </td>
+                                        <td class="">
+                                            <div class="round-btn shadow-sm ms-3 btn btn-light" ng-click="dateRequestAction(inviter.id, 2)" title="accept date invitation" style="width: 30px; height: 30px; margin: 0 auto !important;"><i class="fa fa-check fs-6"></i></div>
+                                        </td>
+                                        <td class="">
+                                            <div class="round-btn shadow-sm ms-3 btn btn-light" ng-click="dateRequestAction(inviter.id, 1)" title="reject date invitation" style="width: 30px; height: 30px; margin: 0 auto !important;"><i class="fa fa-times fs-6"></i></div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -273,6 +185,23 @@
         });
 
         $("#birthday").prop('readonly', true);
+
+        function confirmLogout(url){
+            Swal.fire({
+                title: "Log out confirmation",
+                text: "Are you leaving our website? 😢",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, sign out!"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                    
+                }
+            });
+        }
     </script>
 <?php
     require('./templates/template_html_end.php');

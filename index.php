@@ -16,7 +16,6 @@ require ('./templates/template_header.php')
       const partner_max_age= "<?php echo $_SESSION['partner_max_age'] ; ?>";
     </script>
   <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
-    <div class="loading" ng-if="loading">Loading&#8230;</div>
     <div class="content">
       <div id="carousel-wrapper" style="z-index: 1;" class="opacity-0 bg-black vw-100 position-fixed top-0 p-0" >
         <div role="button" id="cancel-btn" ng-click="stopImageView()" style="z-index: 10; left: 3.5vw; width: 100px; height: 100px;" class="position-absolute text-secondary fw-bold fs-3 d-flex justify-content-center">
@@ -46,7 +45,7 @@ require ('./templates/template_header.php')
                 <div class="d-flex text-white justify-content-between">
                   <div class="d-flex align-items-center">
 
-                    <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 2">
+                    <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 4">
                       <span class="fa-stack me-2" style="font-size: 14px;">
                         <i class="fa fa-certificate fa-stack-2x text-primary"></i>
                         <i class="fa fa-check fa-stack-1x text-white"></i>
@@ -102,8 +101,8 @@ require ('./templates/template_header.php')
                 <div class="">
                   <div class="p-4">
                     <span class="text-secondary fw-bold">Why {{first_name}}'s here</span>
-                    <div class="tag-color p-3 mt-2 rounded-4 d-flex justify-content-start align-items-center">
-                      <i class="fa fa-coffee me-2 fs-3"></i><span class="fs-4 fw-bold">Here to date</span>
+                    <div style="cursor: pointer;" ng-click="dateRequest(member.id)" class="w-100 tag-color p-3 mt-2 rounded-4 d-flex justify-content-start align-items-center">
+                      <i class="fa fa-coffee me-2 fs-3"></i><span class="fs-5 fw-bold">Invite {{first_name}} to date </span>
                     </div>
                   </div>
                   <div class="p-4">
@@ -148,11 +147,11 @@ require ('./templates/template_header.php')
                         <span>{{first_name}} is email verified</span>
                       </span>
 
-                      <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 2">
+                      <span class="fs-5 fw-bold d-flex align-items-center"  ng-if="member.status == 4">
                         <span class="fa-stack me-2" style="font-size: 12px;">
                           <i class="fa fa-certificate fa-stack-2x text-primary"></i>
                           <i class="fa fa-check fa-stack-1x text-white"></i>
-                        </span>{{first_name}} is photo verified</span>
+                        </span>{{first_name}} is admin verified</span>
                       </span>
 
                     </div>

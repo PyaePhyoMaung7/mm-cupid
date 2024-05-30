@@ -157,8 +157,8 @@ $error = false;
                         </p>
                     <?php
                         }
-?>
-                    <button type="button" ng-click="update()" id="update-btn" class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
+                    ?>
+                    <button type="button" ng-click="update()" id="update-details-btn" disabled class="btn btn-dark rounded rounded-5 mb-4 btn-lg mt-4" style="width:100%;">
                         Update
                     </button>
 

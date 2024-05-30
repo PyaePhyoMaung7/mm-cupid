@@ -25,6 +25,7 @@
         $result = $mysqli->query($update_sql);
         if($result){
             $_SESSION['status']= '2';
+            $response['ustatus'] = '2';
             $response['status']= '200';
             echo json_encode($response);
         }

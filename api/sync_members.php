@@ -64,7 +64,7 @@
                             FROM `members` AS T01
                             LEFT JOIN `city` AS T02
                             ON T01.city_id = T02.id
-                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $filter_conditions . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
+                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 5 AND " . $filter_conditions . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
         
         $result = $mysqli->query($get_members_sql);
 
@@ -90,6 +90,18 @@
             }else{
                 $data['thumb'] = $base_url . 'assets/uploads/' .  $data['id'] . '/thumb/' . $thumb;
             }
+
+            $hobbies    = [];
+            $hobby_sql  = "SELECT T01.hobby_id, T02.name 
+                            FROM `member_hobbies` T01
+                            JOIN `hobbies` T02
+                            ON T01.hobby_id = T02.id
+                            WHERE T01.member_id = '$id'";
+            $hobby_res  = $mysqli->query($hobby_sql);
+            while($hobby_row = $hobby_res->fetch_assoc()){
+                array_push($hobbies, $hobby_row['hobby_id']);
+            }
+            $data['hobbies']    = $hobbies;
             
             $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$id' AND deleted_at IS NULL ORDER BY sort ASC";
             $gallery_res = $mysqli->query($gallery_sql);

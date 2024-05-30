@@ -42,7 +42,7 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
     }
 
     $scope.syncMember = function () {
-        $scope.loading = true;
+        $('.loading').show();
         const data = $scope.is_filtered ? {'page' : $scope.page, 'partner_gender' : $scope.partner_gender, 'min_age' : $scope.min_age, 'max_age' : $scope.max_age } : {'page' : $scope.page} ;
         $http({
             method: 'POST',
@@ -53,10 +53,10 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
             }
         }).then(
             function (response) {
-                $scope.loading = false;
                 if(response.data.status == "200") {
                     $scope.members = $scope.members.concat(response.data.data);
                     $scope.show_more = response.data.show_more;
+                    $('.loading').hide();
                 }
             }
         )
@@ -309,6 +309,50 @@ app.controller('myCtrl', function($scope, $http, $timeout, $window){
                 $scope.min_ages.push(i);
             }
         }
+    }
+
+    $scope.dateRequest = function (id) {
+        const data = {'id' : id};
+        $('.loading').show();
+        $http({
+            method: 'POST',
+            url: base_url+'api/invite_date.php',
+            data: data,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+                if (response.data.status == '200') {
+                    const point          = response.data.data.point; 
+                    const success_code   = response.data.data.success;
+                    $('#point').text(point);
+                    $('.loading').hide();
+                   new PNotify({
+                        title: 'Success!',
+                        width: '400px',
+                        addclass: 'pnotify-center',
+                        text: success_messages[success_code],
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+
+                } else {
+                    const error_code = response.data.data.error;
+                    $('.loading').hide();
+                    new PNotify({
+                        title: 'Fail!',
+                        width: '400px',
+                        addclass: 'pnotify-center',
+                        text: error_messages[error_code],
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+                }
+
+            }
+        );
     }
 
 })

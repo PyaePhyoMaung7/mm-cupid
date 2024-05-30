@@ -28,6 +28,7 @@
     <script src="<?php echo $base_url; ?>assets/front/js/jquery-ui.js"></script>
     <script src="<?php echo $base_url; ?>assets/front/js/angular.min.js"></script>
     <script src="<?php echo $base_url; ?>assets/front/js/error_messages.js"></script>
+    <script src="<?php echo $base_url; ?>assets/front/js/success_messages.js"></script>
   
     <link rel="stylesheet" href="<?php echo $base_url; ?>assets/css/font-awesome/font-awesome.min.css">
     <!-- Pnotify -->
@@ -38,6 +39,9 @@
       .btn-outline-secondary {
         --bs-btn-hover-bg: #6c757d32;
       }
+      .pnotify-center {
+        right: calc(50% - 200px) !important;
+      }
     </style>
     <script>
       const base_url = 'http://localhost/mm-cupid/';
@@ -46,3 +50,4 @@
     
   </head>
   <body style="background-color: #e9d8ff">
+  <div class="loading" style="display: none; z-index: 1060;">Loading&#8230;</div>

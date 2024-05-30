@@ -20,7 +20,7 @@
   <div class="d-flex justify-content-center align-items-center">
     <button class="icon-button bg-black justify-content-center me-1 d-flex align-items-center" style="height: 25px; width: 60px; border-radius: 100%/60px;">
       <i class="fa fa-usd me-1 text-dark rounded-circle bg-white" style="font-size: 12px;padding: 2px 5px;"></i>
-      <span class=" text-white" style="font-size: 12px;"><?php echo $_SESSION['upoint']; ?></span>
+      <span class=" text-white" id="point" style="font-size: 12px;"><?php echo $_SESSION['upoint']; ?></span>
     </button>
     <button class="icon-button" >
       <i class="fa fa-search fs-4 fw-bold" id="offcanvas-search-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch"></i>
@@ -59,12 +59,12 @@
             <div class="mb-4">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <strong><label for="search-key">Search Knowledge Post</label></strong>
-                <span class="text-danger" ng-click="emptySearch()">clear</span>
+                <span class="text-danger" style="cursor: pointer;" ng-click="emptySearch()">clear</span>
               </div>
-              <input id="search-key" type="text" class="form-control" ng-model="search_key" placeholder="Enter keywords to search">
+              <input id="search-key" type="text" class="form-control" style="box-shadow: none;" ng-model="search_key" ng-keypress="checkEnter($event)" placeholder="Enter keywords to search">
             </div>
 
-            <button class="btn btn-lg rounded-pill btn-dark w-100" ng-click="searchPost()">Search</button>
+            <button class="btn btn-lg rounded-pill btn-dark w-100" ng-click="searchPost()" >Search</button>
           </div>
         </div>
         ';

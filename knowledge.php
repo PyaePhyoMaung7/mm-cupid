@@ -11,7 +11,6 @@ $keywords_content = "myanrmar online dating, online dating, mmcupid, myanmar dat
 require ('./templates/template_header.php')
 ?>
 <div ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
-    <div class="loading" ng-if="loading">Loading&#8230;</div>
     <div class="content">
         <div id="post-details" class="vw-100 vh-100 position-absolute top-0 left-0 opacity-0" style="z-index: -10; ">
             <div class="d-flex justify-content-center align-items-center w-100 h-100" id="scroll-container">
@@ -68,9 +67,9 @@ require ('./templates/template_header.php')
                                         <img class="w-100 h-100 object-fit-cover" ng-src="{{post.thumb}}" alt="" class="image" >
                                     </div>
                                     <div class="col-7 offset-1 h-100 py-3">
-                                        <h5 class="">{{post.title}}</h5>
+                                        <h6 class="">{{post.title.substring(0, 50)+ ' ...' }}</h6>
                                         <p style="font-size: 12px; line-height: 16px; font-weight: 500" class="pt-2">
-                                            {{ post.description.substring(0, 100)+ ' ...' }}
+                                            {{ post.description.substring(0, 150)+ ' ...' }}
                                         </p>
                                     </div>
                                 </div>
