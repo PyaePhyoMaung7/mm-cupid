@@ -15,6 +15,7 @@ app.controller('myCtrl', function($scope, $http, $window){
     $scope.inviters         = [];
     $scope.all_images       = [];
     $scope.image_arr        = [];
+    $scope.inviter_index    = undefined;
     
     $scope.init = function () {
         const data = {};
@@ -458,6 +459,8 @@ app.controller('myCtrl', function($scope, $http, $window){
         $scope.all_images = [];
         $scope.inviter = $scope.inviters[index];
 
+        $scope.inviter_index = index;
+
         if($scope.inviter.images.length <= 0) {
             let image = {};
             image.sort  = 1;
@@ -474,14 +477,23 @@ app.controller('myCtrl', function($scope, $http, $window){
         }
 
         $('#profile-content').scrollTop(0);
-        $("#image-content").css("z-index", 5);
-        $('#member-profile').removeClass('opacity-0');
-        $("#member-profile").css({
+        $("#member-content").css("z-index", 5);
+        $('#inviter-profile').removeClass('opacity-0');
+        $("#inviter-profile").css({
             "z-index": 10,
             "background-color": "rgba(0, 0, 0, 0.5)"
         });
-        $(".carousel-inner").html("");
+        // $(".carousel-inner").html("");
         
+    }
+
+    $scope.cancelProfile = function () {
+        const profile           = document.querySelector('#inviter-profile');
+        const memberContent      = document.querySelector('#member-content');
+        profile.classList.add('opacity-0');
+        profile.style.zIndex = '-10';
+        memberContent.style.zIndex = '10';
+        profile.style.backgroundColor = "";
     }
 
     $scope.dateRequestAction = function (id, status) {
@@ -500,6 +512,24 @@ app.controller('myCtrl', function($scope, $http, $window){
                     $('.loading').hide();
                 }
                 console.log(response);
+            }
+        );
+    }
+
+    $scope.foundPartner = function (status) {
+        const data      = {'status' : status};
+        $('.loading').show();
+        $http({
+            method: 'POST',
+            url: base_url+'api/update_love_status.php',
+            data: data,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        }).then(
+            function (response) {
+                $scope.member.love_status = response.data.love_status;
+                $('.loading').hide();
             }
         );
     }

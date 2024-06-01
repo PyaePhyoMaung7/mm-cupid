@@ -11,4 +11,5 @@ var error_messages = {
     'A0010' : 'Insufficient points. Please buy points at your profile.',
     'A0011' : 'Your date request is pending.',
     'A0012' : 'Your date request has already been rejected.',
+    'A0013' : 'The user you are trying to invite has already sent you a date request.',
 }

@@ -59,6 +59,7 @@
         $data['partner_max_age']= (int) $row['partner_max_age'];
         $data['work']           = htmlspecialchars($row['work']);
         $data['status']         = (int) $row['status'];
+        $data['love_status']    = (int) $row['love_status'];
         
         $gallery_sql = "SELECT name, sort FROM `member_gallery` WHERE member_id = '$member_id' AND deleted_at IS NULL";
         $gallery_res = $mysqli->query($gallery_sql);
@@ -117,7 +118,7 @@
             $inviter['city'] = htmlspecialchars($row['city_name']);
             $inviter['religion'] = htmlspecialchars($row['religion_name']);
             $inviter['about'] = htmlspecialchars($row['about']);
-            $inviter['status'] = htmlspecialchars($row['status']);
+            $inviter['status'] = (int) ($row['status']);
             $inviter['height'] = $row['height_feet'] . "' " . $row['height_inches'] . "''";
             $inviter['education'] = htmlspecialchars($row['education']);
             $inviter['work'] = htmlspecialchars($row['work']);

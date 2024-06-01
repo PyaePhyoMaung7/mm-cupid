@@ -64,7 +64,7 @@
                             FROM `members` AS T01
                             LEFT JOIN `city` AS T02
                             ON T01.city_id = T02.id
-                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 5 AND " . $filter_conditions . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
+                            WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 5 AND T01.love_status != 1 AND " . $filter_conditions . " T01.deleted_at IS NULL LIMIT $offset, $record_per_page";
         
         $result = $mysqli->query($get_members_sql);
 
@@ -119,7 +119,7 @@
             array_push($response_data, $data);
         }
 
-        $more_members_sql = "SELECT count(T01.id) AS total FROM `members` T01 WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 3 AND " . $filter_conditions . " T01.deleted_at IS NULL";
+        $more_members_sql = "SELECT count(T01.id) AS total FROM `members` T01 WHERE T01.id != '$member_id' AND T01.status != 0 AND T01.status != 5 AND T01.love_status != 1 AND " . $filter_conditions . " T01.deleted_at IS NULL";
         $more_memebrs_res = $mysqli->query($more_members_sql);
         $row2 = $more_memebrs_res->fetch_assoc();
         $total_count = $row2['total'];

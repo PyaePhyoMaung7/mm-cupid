@@ -42,7 +42,29 @@
                 }
                 $response['data']   = $data;
                 
-            } else {
+            } 
+            else {
+                $get_invited_sql    =  "SELECT status FROM `date_request`
+                                        WHERE invite_id = '$accept_id'
+                                        AND accept_id   = '$member_id'
+                                        AND deleted_at IS NULL";
+
+                $get_invited_res    = $mysqli->query($get_invited_sql);
+
+                if($get_invited_res->num_rows > 0) {
+                    $response['status'] = '400';
+
+                    while($get_invited_row = $get_invited_res->fetch_assoc()) {
+                        $status = $get_invited_row['status'];
+                    }
+                    if($status == 0) {
+                        $data               = ['error' => "A0011"];
+                    }else if($status == 1) {
+                        $data               = ['error' => "A0012"];
+                    }
+                    $response['data']   = $data;
+                }
+
                 $insert_sql     = "INSERT INTO `date_request` 
                                     (invite_id, accept_id, status, created_at, created_by, updated_at, updated_by)
                                     VALUES('$member_id', '$accept_id' , 0, '$today_dt', '$member_id', '$today_dt', '$member_id')";
