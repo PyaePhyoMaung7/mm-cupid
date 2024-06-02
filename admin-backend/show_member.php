@@ -3,14 +3,36 @@
     $auth_role = [1,2];
     require('../site-config/admin_require.php');
 
-    $current_page   = isset($_GET['page']) ? $_GET['page'] : 1;
+    
+    $selected_status    = '';
+    $where_status       = "";
+    $url_status         = "";
 
-    $record_per_page= 5;
-    $total_sql  = "SELECT count(id) AS total FROM `members`";
-    $total_result = $mysqli->query($total_sql);
-    $total_row = $total_result->fetch_assoc();
-    $total_members = $total_row['total'];
-    $total_pages = ceil($total_members / $record_per_page);
+    $current_page       = isset($_GET['page']) ? $_GET['page'] : 1;
+    
+    if(isset($_GET['status'])) {
+        $selected_status = $_GET['status'];
+        $where_status   = " WHERE status = " . $selected_status;
+        $url_status     = "status=" . $selected_status  . '&';
+
+    }
+
+    if(isset($_POST['form-sub']) && $_POST['form-sub'] == 1 && $_POST['selected_status'] != '') {
+        $selected_status    = $_POST['selected_status'];
+        $where_status       = " WHERE status = " . $selected_status;
+        $url_status         = "status=" . $selected_status  . '&';
+    }
+
+    if($selected_status != '' && ($selected_status < 0 || $selected_status > 6)) {
+        $current_page       = 1;
+    }
+
+    $record_per_page    = 5;
+    $total_sql          = "SELECT count(id) AS total FROM `members`" . $where_status;
+    $total_result       = $mysqli->query($total_sql);
+    $total_row          = $total_result->fetch_assoc();
+    $total_members      = $total_row['total'];
+    $total_pages        = ceil($total_members / $record_per_page);
 
     if($current_page < 1 || $current_page > $total_pages){
         $current_page = 1;
@@ -19,10 +41,10 @@
     $offset = ($current_page - 1) * $record_per_page ;
     
     $title          = ": Member List";
-    $next_page_url  = $admin_base_url . 'show_member.php?page=' . $current_page+1 ;
-    $prev_page_url  = $admin_base_url . 'show_member.php?page=' . $current_page-1 ;
-    $first_page_url = $admin_base_url . 'show_member.php?page=1' ;
-    $last_page_url  = $admin_base_url . 'show_member.php?page=' . $total_pages ;
+    $next_page_url  = $admin_base_url . 'show_member.php?' . $url_status . 'page=' . $current_page+1 ;
+    $prev_page_url  = $admin_base_url . 'show_member.php?' . $url_status . 'page=' . $current_page-1 ;
+    $first_page_url = $admin_base_url . 'show_member.php?' . $url_status . 'page=1' ;
+    $last_page_url  = $admin_base_url . 'show_member.php?' . $url_status . 'page=' . $total_pages ;
 
     $sql        = "SELECT 
                 members.id AS id, username, email, phone, gender, status, CONCAT(date_of_birth,' (', TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()), ')') AS date_of_birth, thumbnail, city_id, city.name AS city_name,
@@ -32,9 +54,11 @@
                 END AS gender
                 FROM `members` 
                 JOIN `city`
-                ON members.city_id = city.id
+                ON members.city_id = city.id 
+                " . $where_status . "
                 ORDER BY id DESC
                 LIMIT $offset, $record_per_page";
+
     $result     = $mysqli->query($sql);
     $num_rows   = $result->num_rows;
 
@@ -47,7 +71,23 @@
     <div class="">
     <div class="page-title">
         <div class="title_left">
-        <h3>Member List</h3><span>
+            <h3>Member List</h3>
+        </div>
+        <div class="title_right">
+            <form id="status-filter-form" action="<?php echo $admin_base_url; ?>show_member.php" method="POST">
+                <select onchange="filterWithStatus()" class="form-control col-4 float-right" name="selected_status" id="">
+                    <option value="" <?php if($selected_status == '') echo 'selected'; ?>>all</option>
+                    <option value="0" <?php if($selected_status == 0) echo 'selected'; ?>>unverified</option>
+                    <option value="1" <?php if($selected_status == 1) echo 'selected'; ?>>email_verified</option>
+                    <option value="2" <?php if($selected_status == 2) echo 'selected'; ?>>pending</option>
+                    <option value="3" <?php if($selected_status == 3) echo 'selected'; ?>>denied</option>
+                    <option value="4" <?php if($selected_status == 4) echo 'selected'; ?>>approved</option>
+                    <option value="5" <?php if($selected_status == 5) echo 'selected'; ?>>banned</option>
+                    <option value="6" <?php if($selected_status == 6) echo 'selected'; ?>>partner_found</option>
+                </select>
+
+                <input type="hidden" name="form-sub" value="1">
+            </form>
         </div>
     </div>
 
@@ -95,7 +135,7 @@
                                 $thumb_url          = $base_url . 'assets/uploads/' . $id . '/thumb/' . $thumb;
                                 $city_name          = htmlspecialchars($row['city_name']);
                                 $status             = htmlspecialchars($row['status']);
-                                $ban_url            = $admin_base_url . 'ban_member.php?id=' . $id;
+                                $ban_unban_url      = $admin_base_url . 'ban_member.php?id=' . $id;
                                 $confirm_url        = $admin_base_url . 'confirm_member.php?id=' . $id;
                                 $view_url           = $admin_base_url . 'member_details.php?id=' . $id;
                                 $point_url          = $admin_base_url . 'manage_point.php?id=' . $id;
@@ -143,10 +183,26 @@
                                     ?>
                                 </td>
                                 <td class="align-middle">
-                                    <a href="javascript:void(0)" onclick="confirmBan('<?php echo $ban_url; ?>')" ><button type="button" class="btn btn-danger py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-trash"></i> <span>Ban</span> </button></a>
-                                    <!-- <a href="<?php echo $confirm_url; ?>" ><button type="button" class="btn btn-success py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-check"></i> <span>Confirm</span></button></a> -->
-                                    <a href="<?php echo $view_url; ?>" ><button type="button" class="btn btn-dark py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-eye"></i> <span>View</span></button></a>
-                                    <a href="<?php echo $point_url; ?>" ><button type="button" class="btn btn-primary py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-diamond"></i> <span>Point</span></button></a>
+                                    <?php 
+                                    if($status == 2) {
+                                    ?>
+                                        <a href="<?php echo $confirm_url; ?>" ><button type="button" class="btn btn-success shadow-sm py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-check"></i> <span>Confirm</span></button></a>
+                                    <?php
+                                    }
+                                    ?>
+                                    <a href="<?php echo $view_url; ?>" ><button type="button" class="btn btn-dark shadow-sm py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-eye"></i> <span>View</span></button></a>
+                                    <a href="<?php echo $point_url; ?>" ><button type="button" class="btn btn-primary shadow-sm py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-diamond"></i> <span>Point</span></button></a>
+                                    <?php 
+                                    if($status == 5) {
+                                    ?>
+                                    <a href="javascript:void(0)" onclick="confirmBanOrUnban('<?php echo $ban_unban_url; ?>&status=2', <?php echo $status; ?>)" ><button type="button" class="btn btn-white text-danger shadow-sm py-0 d-flex justify-content-between align-items-center btn-sm w-100"><i class="fa fa-unlock"></i> <span>Release</span> </button></a>
+                                    <?php
+                                    } else {
+                                    ?>
+                                    <a href="javascript:void(0)" onclick="confirmBanOrUnban('<?php echo $ban_unban_url; ?>&status=5', <?php echo $status; ?>)" ><button type="button" class="btn btn-danger py-0 d-flex shadow-sm justify-content-between align-items-center btn-sm w-100"><i class="fa fa-ban"></i> <span>Ban</span> </button></a>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                         <?php
@@ -180,21 +236,37 @@
 ?>
 <!-- Custom javascript code goes here -->
 <script>
-    function confirmBan(url){
+    function confirmBanOrUnban (url, status) {
+        let title, message, confirm_message;
+        if (status == 5) {
+            title           = "Release confirmation!"
+            message         = "Are you sure to release this member!";
+            confirm_message = "Yes, release him/her";
+            console.log('hi');
+        } else {
+            title           = "Ban confirmation!"
+            message         = "Are you sure to ban this member!";
+            confirm_message = "Yes, ban him/her";
+        }
+
         Swal.fire({
-            title: "Ban confirmation?",
-            text: "Are you sure to ban this member!",
+            title: title,
+            text: message,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Ban him!"
+            confirmButtonText: confirm_message
             }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = url;
                 
             }
         });
+    }
+
+    function filterWithStatus () {
+        $('#status-filter-form').submit();
     }
     
 </script>
