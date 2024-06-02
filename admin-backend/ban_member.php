@@ -14,10 +14,9 @@
     $sql        = "UPDATE `members` SET status = '$status',  updated_at = '$today_dt', updated_by = '$user_id' WHERE id = '$id'";
     $result     = $mysqli->query($sql);
 
-    $url        = $admin_base_url . 'show_member.php';
-    header('Refresh: 0 ; url = '.$url);
-
+    // $url        = $admin_base_url . 'show_member.php';
+    // header('Refresh: 0 ; url = '.$url);
+    echo "<script>history.back()</script>";
     exit();
-
    
 ?>

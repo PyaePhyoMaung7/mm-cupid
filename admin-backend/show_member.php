@@ -17,12 +17,6 @@
 
     }
 
-    if(isset($_POST['form-sub']) && $_POST['form-sub'] == 1 && $_POST['selected_status'] != '') {
-        $selected_status    = $_POST['selected_status'];
-        $where_status       = " WHERE status = " . $selected_status;
-        $url_status         = "status=" . $selected_status  . '&';
-    }
-
     if($selected_status != '' && ($selected_status < 0 || $selected_status > 6)) {
         $current_page       = 1;
     }
@@ -74,8 +68,8 @@
             <h3>Member List</h3>
         </div>
         <div class="title_right">
-            <form id="status-filter-form" action="<?php echo $admin_base_url; ?>show_member.php" method="POST">
-                <select onchange="filterWithStatus()" class="form-control col-4 float-right" name="selected_status" id="">
+            <!-- <form id="status-filter-form" action="<?php echo $admin_base_url; ?>show_member.php" method="POST"> -->
+                <select onchange="filterWithStatus()" class="form-control col-4 float-right" name="selected_status" id="selected-status">
                     <option value="" <?php if($selected_status == '') echo 'selected'; ?>>all</option>
                     <option value="0" <?php if($selected_status == 0) echo 'selected'; ?>>unverified</option>
                     <option value="1" <?php if($selected_status == 1) echo 'selected'; ?>>email_verified</option>
@@ -86,8 +80,8 @@
                     <option value="6" <?php if($selected_status == 6) echo 'selected'; ?>>partner_found</option>
                 </select>
 
-                <input type="hidden" name="form-sub" value="1">
-            </form>
+                <!-- <input type="hidden" name="form-sub" value="1"> -->
+            <!-- </form> -->
         </div>
     </div>
 
@@ -266,7 +260,15 @@
     }
 
     function filterWithStatus () {
-        $('#status-filter-form').submit();
+        const status    = $('#selected-status').val();
+        let location;
+        
+        if (status != '') {
+            location  = "<?php echo $admin_base_url; ?>show_member.php?" + "status=" + status + "&page=1";
+        } else {
+            location  = "<?php echo $admin_base_url; ?>show_member.php?page=1";
+        }
+        window.location.href = location;
     }
     
 </script>
